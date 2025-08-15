@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Maklumat Pesakit - 6 Tab</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+    }
+    .header {
+      background-color: #111;
+      color: white;
+      padding: 0;
+      text-align: center;
+      margin: -20px -20px 10px -20px;
+      width: calc(100% + 40px);
+    }
+    .header img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .container h1 {
+      margin: 5px 0 10px 0;
+      color: #333;
+    }
+    .compartment {
+      display: none;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      margin-bottom: 20px;
+    }
+    .compartment.active {
+      display: block;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    textarea { resize: vertical; }
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 8px;
+    }
+    .button-group {
+      margin-top: 20px;
+      text-align: right;
+    }
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .save-btn { background-color: #4CAF50; color: white; }
+    .next-btn { background-color: #2196F3; color: white; }
+    .back-btn { background-color: #f44336; color: white; }
+    .save-btn:hover { background-color: #3e8e41; }
+    .next-btn:hover { background-color: #0b7dda; }
+    .back-btn:hover { background-color: #da190b; }
+    .tab-container {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 10px 15px;
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      border-bottom: none;
+      border-radius: 5px 5px 0 0;
+      margin-right: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .tab.active {
+      background-color: #f9f9f9;
+      font-weight: bold;
+      color: #2196F3;
+    }
+    .tab.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    /* Kategori tajuk (tak boleh klik) */
+    .category-title {
+      font-weight: bold;
+      background-color: #eee;
+      padding: 5px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <img src="Testbanner.jpg" alt="Banner">
+</div>
+
+<div class="container">
+  <h1>Sistem Maklumat Pesakit</h1>
+
+  <!-- Tab Navigation -->
+  <div class="tab-container">
+    <div class="tab active" data-tab="1">1. Maklumat Peribadi</div>
+    <div class="tab disabled" data-tab="2">2. Kategori Kes</div>
+    <div class="tab disabled" data-tab="3">3. Tujuan Rujukan</div>
+    <div class="tab disabled" data-tab="4">4. Maklumat Perujuk</div>
+    <div class="tab disabled" data-tab="5">5. Rujukan Agensi</div>
+    <div class="tab disabled" data-tab="6">6. Tarikh Temu Janji</div>
+  </div>
+
+  <!-- TAB 1 -->
+  <div class="compartment active" id="compartment1">
+    <h3>Maklumat Peribadi</h3>
+    <div class="form-group"><label>Nama</label><input id="nama"></div>
+    <div class="form-group"><label>Alamat</label><textarea id="alamat"></textarea></div>
+    <div class="form-group"><label>No. Tel.</label><input id="notel"></div>
+    <div class="form-group"><label>No. KP</label><input id="nokp"></div>
+    <div class="form-group"><label>Tarikh Lahir</label><input type="date" id="tarikhlahir"></div>
+    <div class="form-group"><label>Jantina</label><input id="jantina"></div>
+    <div class="form-group"><label>Umur</label><input id="umur"></div>
+    <div class="form-group"><label>Agama</label><input id="agama"></div>
+    <div class="form-group"><label>Bangsa</label><input id="bangsa"></div>
+    <div class="form-group"><label>No. Daftar</label><input id="nodaftar"></div>
+    <div class="form-group"><label>Wad / Klinik</label><input id="wadklinik"></div>
+    <div class="form-group"><label>Tarikh Masuk Wad</label><input type="date" id="tarikhmasuk"></div>
+    <div class="form-group"><label>Tarikh Dijangka Discaj</label><input type="date" id="tarikhdiscaj"></div>
+    <div class="form-group"><label>Diagnosa</label><input id="diagnosa"></div>
+    <div class="form-group"><label>Prognosis</label><input id="prognosis"></div>
+    <div class="form-group"><label>Mobiliti Pesakit</label><input id="mobiliti"></div>
+    <div class="button-group">
+      <button class="save-btn" onclick="simpan(1)">Simpan</button>
+      <button class="next-btn" onclick="next(1)">Seterusnya</button>
+    </div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div class="compartment" id="compartment2">
+    <h3>Kategori Kes</h3>
+    <div class="form-group"><label><input type="checkbox" id="penyakitkronik"> Penyakit Kronik</label></div>
+    <div class="form-group"><label><input type="checkbox" id="penderaananak"> Penderaan Kanak-kanak</label></div>
+    <div class="form-group"><label><input type="checkbox" id="rumahTangga"> Keganasan Rumah Tangga</label></div>
+    <div class="form-group"><label><input type="checkbox" id="ibutnpnikah"> Ibu Tanpa Nikah</label></div>
+    <div class="form-group"><label><input type="checkbox" id="seksual"> Keganasan Seksual</label></div>
+    <div class="form-group"><label><input type="checkbox" id="terdampar"> Pesakit Terdampar</label></div>
+    <div class="form-group"><label><input type="checkbox" id="tingkahlaku"> Masalah Tingkah Laku</label></div>
+    <div class="form-group"><label><input type="checkbox" id="hiv"> HIV POSITIF / AIDS</label></div>
+    <div class="form-group"><label><input type="checkbox" id="dadah"> Kegiatan Dadah / Alkohol</label></div>
+    <div class="form-group"><label><input type="checkbox" id="bunuhdiri"> Cubaan Bunuh Diri</label></div>
+    <div class="form-group"><label><input type="checkbox" id="oku"> OKU</label></div>
+    <div class="form-group">
+      <label><input type="checkbox" id="lainCheck" onclick="toggleLainTextbox()"> Lain-lain</label>
+      <input id="lain" type="text" placeholder="Sila nyatakan" style="display:none; margin-top:5px;">
+    </div>
+    <div class="button-group">
+      <button class="back-btn" onclick="back(2)">Kembali</button>
+      <button class="save-btn" onclick="simpan(2)">Simpan</button>
+      <button class="next-btn" onclick="next(2)">Seterusnya</button>
+    </div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div class="compartment" id="compartment3">
+    <h3>Tujuan Rujukan</h3>
+    
+    <!-- Bantuan Praktik -->
+    <div class="form-group">
+      <span class="category-title">BANTUAN PRAKTIK</span>
+    </div>
+    <div class="form-group" style="margin-left:20px;">
+      <label><input type="checkbox" class="bantuanpraktik"> Pembiayaan Peralatan Perubatan</label>
+      <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Rawatan</label>
+      <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Ubat-Ubatan</label>
+      <label><input type="checkbox" class="bantuanpraktik"> Bantuan Am</label>
+      <label><input type="checkbox" class="bantuanpraktik"> Penempatan Institusi</label>
+      <label><input type="checkbox" class="bantuanpraktik"> Mengesan Waris</label>
+    </div>
+
+    <!-- Terapi Sokongan -->
+    <div class="form-group">
+      <span class="category-title">TERAPI SOKONGAN</span>
+    </div>
+    <div class="form-group" style="margin-left:20px;">
+      <label><input type="checkbox" class="terapisokongan"> Khidmat Perundingan</label>
+      <label><input type="checkbox" class="terapisokongan"> Sokongan Emosi</label>
+      <label><input type="checkbox" class="terapisokongan"> Intervensi Krisis</label>
+    </div>
+
+    <div class="button-group">
+      <button class="back-btn" onclick="back(3)">Kembali</button>
+      <button class="save-btn" onclick="simpan(3)">Simpan</button>
+      <button class="next-btn" onclick="next(3)">Seterusnya</button>
+    </div>
+  </div>
+
+  <!-- TAB 4 -->
+  <div class="compartment" id="compartment4">
+    <h3>Maklumat Perujuk</h3>
+    <div class="form-group"><label>Nama Disiplin</label><input id="disiplin"></div>
+    <div class="form-group"><label>Wad / Klinik / JPL / DD</label><input id="wadrujuk"></div>
+    <div class="form-group"><label>Diagnosis</label><input id="diagnosisrujuk"></div>
+    <div class="button-group">
+      <button class="back-btn" onclick="back(4)">Kembali</button>
+      <button class="save-btn" onclick="simpan(4)">Simpan</button>
+      <button class="next-btn" onclick="next(4)">Seterusnya</button>
+    </div>
+  </div>
+
+  <!-- TAB 5 -->
+  <div class="compartment" id="compartment5">
+    <h3>Rujukan Agensi</h3>
+    <div class="form-group"><label>Nama Agensi</label><input id="agensi"></div>
+    <div class="form-group"><label>Tarikh Laporan Dihantar</label><input type="date" id="tarikhlaporan"></div>
+    <div class="form-group"><label>Item Dipohon</label><input id="item"></div>
+    <div class="form-group"><label>Tanggungan Pesakit (RM)</label><input type="number" id="tanggung"></div>
+    <div class="form-group"><label>Jumlah Dipohon (RM)</label><input type="number" id="dipohon"></div>
+    <div class="form-group"><label>Nama Pembekal</label><input id="pembekal"></div>
+    <div class="form-group"><label>Tarikh Kelulusan</label><input type="date" id="tarikhlulus"></div>
+    <div class="form-group"><label>Jumlah Kelulusan (RM)</label><input type="number" id="lulus"></div>
+    <div class="form-group"><label>Tarikh Tuntutan</label><input type="date" id="tarikhtuntut"></div>
+    <div class="button-group">
+      <button class="back-btn" onclick="back(5)">Kembali</button>
+      <button class="save-btn" onclick="simpan(5)">Simpan</button>
+      <button class="next-btn" onclick="next(5)">Seterusnya</button>
+    </div>
+  </div>
+
+  <!-- TAB 6 -->
+  <div class="compartment" id="compartment6">
+    <h3>Tarikh Temu Janji</h3>
+    <div class="form-group"><label>Pegawai Kes</label><input id="pegawaikes"></div>
+    <div class="form-group"><label>Tarikh Temu Janji</label><input type="date" id="tarikhtemujanji"></div>
+    <div class="form-group"><label>Masa Temu Janji</label><input type="time" id="masatemujanji"></div>
+    <div class="form-group"><label>Tempat Temu Janji</label><input type="text" id="tempattemujanji" placeholder="Sila nyatakan tempat temu janji"></div>
+    <div class="form-group"><label>Catatan Temu Janji</label><textarea id="catatantemujanji" placeholder="Catatan tambahan untuk temu janji"></textarea></div>
+    <div class="button-group">
+      <button class="back-btn" onclick="back(6)">Kembali</button>
+      <button class="save-btn" onclick="simpan(6)">Simpan</button>
+      <button class="next-btn" onclick="hantar()">Hantar Semua</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let data = {};
+
+function toggleLainTextbox() {
+  const lainCheckbox = document.getElementById('lainCheck');
+  const lainTextbox = document.getElementById('lain');
+  lainTextbox.style.display = lainCheckbox.checked ? 'block' : 'none';
+}
+
+function switchTab(num) {
+  document.querySelectorAll('.compartment').forEach(c => c.classList.remove('active'));
+  document.querySelector(`#compartment${num}`).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.tab[data-tab="${num}"]`).classList.add('active');
+}
+
+function next(num) {
+  simpan(num);
+  document.querySelector(`.tab[data-tab="${num+1}"]`).classList.remove('disabled');
+  switchTab(num+1);
+}
+
+function back(num) {
+  simpan(num);
+  switchTab(num-1);
+}
+
+function simpan(num) {
+  let inputs = document.querySelectorAll(`#compartment${num} input, #compartment${num} textarea, #compartment${num} select`);
+  inputs.forEach(i => {
+    if (i.type === "checkbox") {
+      data[i.id || i.className] = i.checked ? "Ya" : "Tidak";
+    } else {
+      data[i.id] = i.value;
+    }
+  });
+  console.log(`Bahagian ${num} disimpan`, data);
+}
+
+function hantar() {
+  simpan(6);
+  console.log("Semua data dihantar:", data);
+  alert("Semua maklumat telah dihantar!");
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    let tabNum = parseInt(this.dataset.tab);
+    if (!this.classList.contains('disabled')) {
+      switchTab(tabNum);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
