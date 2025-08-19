@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ms">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DAFTAR PERMOHONAN BARU — Calendar with Reminders</title>
+  <title>DAFTAR PERMOHONAN BARU — Kalendar dengan Peringatan</title>
 
   <!-- FullCalendar (CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/ms.global.min.js"></script>
 
   <style>
     body {
@@ -99,7 +100,6 @@
 
     input[type="text"] {
       padding: 10px 35px 10px 12px;
-      /* ruang kanan lebih untuk X */
       width: 250px;
       font-size: 16px;
       border: 2px solid #ccc;
@@ -268,41 +268,96 @@
       font-size: 18px;
     }
 
-    .reminder-box ul {
-      padding-left: 18px;
-      margin: 0 0 6px 0;
+    .date-group {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
     }
 
-    .reminder-box li {
-      font-size: 0.95em;
-      color: #333;
-      margin-bottom: 8px;
+    .date-header {
+      background-color: #f0f0f0;
+      padding: 8px 12px;
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .date-header:hover {
+      background-color: #e0e0e0;
+    }
+
+    .date-header .arrow {
+      transition: transform 0.3s;
+    }
+
+    .date-header.collapsed .arrow {
+      transform: rotate(-90deg);
+    }
+
+    .appointments-list {
+      padding: 0;
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .date-header:not(.collapsed) + .appointments-list {
+      max-height: 500px;
+    }
+
+    .appointment-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid #eee;
       align-items: center;
     }
 
-    .rem-event-date {
-      color: #666;
-      font-size: 0.85em;
-      margin-left: 6px;
+    .appointment-item:last-child {
+      border-bottom: none;
+    }
+
+    .appointment-actions {
+      display: flex;
+      gap: 5px;
     }
 
     .btn-small {
       background: #e74c3c;
       color: white;
       border: none;
-      padding: 6px 8px;
+      padding: 4px 8px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.85em;
+      font-size: 0.75em;
     }
 
     .btn-small.secondary {
       background: #888;
     }
 
+    .btn-small.edit {
+      background: #357ab7;
+    }
+
+    .no-appointments {
+      padding: 10px;
+      text-align: center;
+      color: #888;
+      font-style: italic;
+    }
+
+    .tips-section {
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+      font-size: 14px;
+      color: #555;
+    }
 
     /* ---------- Modal for add/remove event ---------- */
     .modal-backdrop {
@@ -339,13 +394,26 @@
       max-height: 200px;
       overflow: auto;
       margin-bottom: 12px;
+      padding: 0;
+      list-style-type: none;
     }
 
     .modal .events-list li {
       display: flex;
       justify-content: space-between;
-      padding: 6px 0;
+      padding: 8px 0;
       border-bottom: 1px solid #f0f0f0;
+    }
+
+    .modal .events-list li:last-child {
+      border-bottom: none;
+    }
+
+    .modal .no-events {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      padding: 10px 0;
     }
 
     .modal label {
@@ -422,7 +490,9 @@
       <a href="#" onclick="confirmGoLogin()">Login</a> &gt;
       <a href="test(home).html">Halaman Utama</a>
     </div>
-    <button class="logout-btn" onclick="confirmLogout()">Log Out</button>
+    <button class="logout-btn" onclick="confirmLogout()">
+      <i class="fas fa-sign-out-alt"></i> Log Out
+    </button>
   </div>
 
   <!-- kontena utama -->
@@ -448,12 +518,11 @@
 
     <div class="reminder-box">
       <h2>Temujanji Akan Datang</h2>
-      <ul id="reminder-list">
-        <li>Tiada temujanji akan datang.</li>
-      </ul>
-      <hr style="margin:10px 0;">
-      <div style="font-size:14px;color:#555;">
-        Tips:
+      <div id="reminder-list">
+        <div class="no-appointments">Tiada temujanji akan datang.</div>
+      </div>
+      <div class="tips-section">
+        <strong>Tips:</strong>
         <ul style="padding-left:18px;margin:6px 0;">
           <li>Klik tarikh untuk urus (tambah / padam) temujanji.</li>
           <li>Temujanji disimpan dalam pelayar anda.</li>
@@ -522,6 +591,7 @@
         window.location.href = "test(login).html";
       }
     }
+    
     /* ===========================
        Small sample record DB (original UI)
        =========================== */
@@ -600,7 +670,8 @@
     // helpers
     function createId() { return 'id-' + Date.now() + '-' + Math.floor(Math.random() * 10000); }
     function formatDateDisplay(d) { // d is Date object
-      return d.toDateString(); // e.g. "Mon Aug 11 2025"
+      const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
+      return d.toLocaleDateString('ms-MY', options);
     }
 
     // Modal elements & functions
@@ -617,7 +688,8 @@
       modalCurrentDateStr = dateStr;
       modalBackdrop.style.display = 'flex';
       modalBackdrop.setAttribute('aria-hidden', 'false');
-      modalDateLabel.textContent = 'Date: ' + dateStr + ' (' + new Date(dateStr).toDateString() + ')';
+      const dateObj = new Date(dateStr);
+      modalDateLabel.textContent = 'Tarikh: ' + formatDateDisplay(dateObj);
       newEventTitleInput.value = '';
       renderModalEvents();
       newEventTitleInput.focus();
@@ -642,6 +714,7 @@
         initialView: 'dayGridMonth',
         selectable: true,
         editable: true,
+        locale: 'ms', // Set locale to Malay
         events: storedEvents.map(ev => ({ id: ev.id, title: ev.title, start: ev.start })),
         dateClick: function (info) {
           // Open modal to manage events for this date
@@ -671,22 +744,21 @@
       function renderModalEvents() {
         modalEventsList.innerHTML = '';
         const eventsOnDate = storedEvents.filter(e => e.start === modalCurrentDateStr);
+        
         if (eventsOnDate.length === 0) {
-          const li = document.createElement('li');
-          li.style.listStyle = 'none';
-          li.textContent = 'No appointment on this date.';
-          modalEventsList.appendChild(li);
+          const noEvents = document.createElement('li');
+          noEvents.className = 'no-events';
+          noEvents.textContent = 'Tiada temujanji pada tarikh ini.';
+          modalEventsList.appendChild(noEvents);
           return;
         }
 
         eventsOnDate.forEach(ev => {
           const li = document.createElement('li');
-          li.style.listStyle = 'none';
           const left = document.createElement('div');
           left.style.display = 'flex';
           left.style.flexDirection = 'column';
-          left.innerHTML = `<strong style="font-size:0.95em;">${escapeHtml(ev.title)}</strong>
-                          <span style="font-size:0.85em;color:#666;">${ev.start}</span>`;
+          left.innerHTML = `<strong style="font-size:0.95em;">${escapeHtml(ev.title)}</strong>`;
 
           const right = document.createElement('div');
 
@@ -695,7 +767,7 @@
           delBtn.textContent = 'Padam';
           delBtn.style.marginLeft = '8px';
           delBtn.onclick = function () {
-            if (!confirm(`Delete appointment "${ev.title}" on ${ev.start}?`)) return;
+            if (!confirm(`Padam temujanji "${ev.title}" pada ${formatDateDisplay(new Date(ev.start))}?`)) return;
             // remove from storedEvents
             storedEvents = storedEvents.filter(x => x.id !== ev.id);
             saveEventsToStorage(storedEvents);
@@ -712,7 +784,7 @@
           li.style.display = 'flex';
           li.style.justifyContent = 'space-between';
           li.style.alignItems = 'center';
-          li.style.padding = '6px 0';
+          li.style.padding = '8px 0';
           modalEventsList.appendChild(li);
         });
       }
@@ -720,7 +792,7 @@
       modalAddBtn.addEventListener('click', function () {
         const title = newEventTitleInput.value.trim();
         if (!title) {
-          alert('Please enter an patient name.');
+          alert('Sila masukkan nama pesakit.');
           newEventTitleInput.focus();
           return;
         }
@@ -745,7 +817,7 @@
         });
       }
 
-      // update reminder list (all upcoming events sorted by date)
+      // update reminder list with collapsible date groups
       function updateReminderList() {
         const now = new Date();
         const upcoming = storedEvents
@@ -757,52 +829,81 @@
         reminderList.innerHTML = '';
 
         if (upcoming.length === 0) {
-          reminderList.innerHTML = '<li>Tiada Temujanji Pada Masa Akan Datang.</li>';
+          reminderList.innerHTML = '<div class="no-appointments">Tiada temujanji akan datang.</div>';
           return;
         }
 
-        upcoming.forEach(item => {
-          const li = document.createElement('li');
-          const left = document.createElement('div');
-          left.style.display = 'flex';
-          left.style.flexDirection = 'column';
-          left.innerHTML = `<span style="font-weight:600">${escapeHtml(item.title)}</span>
-                          <span class="rem-event-date">${formatDateDisplay(item.dateObj)}</span>`;
-          const right = document.createElement('div');
+        // Group appointments by date
+        const appointmentsByDate = {};
+        upcoming.forEach(appointment => {
+          const dateKey = appointment.start;
+          if (!appointmentsByDate[dateKey]) {
+            appointmentsByDate[dateKey] = [];
+          }
+          appointmentsByDate[dateKey].push(appointment);
+        });
 
-          // Add quick delete button
-          const delBtn = document.createElement('button');
-          delBtn.className = 'btn-small';
-          delBtn.textContent = 'Padam';
-          delBtn.onclick = function () {
-            if (!confirm(`Delete "${item.title}" on ${item.start}?`)) return;
-            // remove from storage
-            storedEvents = storedEvents.filter(e => e.id !== item.id);
-            saveEventsToStorage(storedEvents);
-            // remove from calendar
-            const calEv = calendar.getEventById(item.id);
-            if (calEv) calEv.remove();
-            updateReminderList();
-          };
-
-          // Add edit/manage button to open modal for date
-          const manageBtn = document.createElement('button');
-          manageBtn.className = 'btn-small secondary';
-          manageBtn.textContent = 'Ubah Tarikh';
-          manageBtn.style.background = '#357ab7';
-          manageBtn.onclick = function () { openModalForDate(item.start); };
-
-          right.appendChild(manageBtn);
-          right.appendChild(delBtn);
-
-          li.appendChild(left);
-          li.appendChild(right);
-          reminderList.appendChild(li);
+        // Create collapsible date groups
+        Object.keys(appointmentsByDate).sort().forEach(dateKey => {
+          const dateObj = new Date(dateKey);
+          const appointments = appointmentsByDate[dateKey];
+          
+          const dateGroup = document.createElement('div');
+          dateGroup.className = 'date-group';
+          
+          const dateHeader = document.createElement('div');
+          dateHeader.className = 'date-header collapsed';
+          dateHeader.innerHTML = `
+            <span>${formatDateDisplay(dateObj)}</span>
+            <span class="arrow">▼</span>
+          `;
+          
+          const appointmentsList = document.createElement('div');
+          appointmentsList.className = 'appointments-list';
+          
+          // Add appointments for this date
+          appointments.forEach(appointment => {
+            const appointmentItem = document.createElement('div');
+            appointmentItem.className = 'appointment-item';
+            appointmentItem.innerHTML = `
+              <div>${escapeHtml(appointment.title)}</div>
+              <div class="appointment-actions">
+                <button class="btn-small edit" onclick="openModalForDate('${appointment.start}')">Ubah</button>
+                <button class="btn-small" onclick="deleteAppointment('${appointment.id}')">Padam</button>
+              </div>
+            `;
+            appointmentsList.appendChild(appointmentItem);
+          });
+          
+          // Toggle collapse on header click
+          dateHeader.addEventListener('click', function() {
+            this.classList.toggle('collapsed');
+          });
+          
+          dateGroup.appendChild(dateHeader);
+          dateGroup.appendChild(appointmentsList);
+          reminderList.appendChild(dateGroup);
         });
       }
 
-      // Expose updateReminderList to outer scope for use when calendar events are changed via drag/drop
+      // Function to delete an appointment
+      window.deleteAppointment = function(id) {
+        if (!confirm('Padam temujanji ini?')) return;
+        
+        // Remove from storage
+        storedEvents = storedEvents.filter(e => e.id !== id);
+        saveEventsToStorage(storedEvents);
+        
+        // Remove from calendar
+        const calEv = calendar.getEventById(id);
+        if (calEv) calEv.remove();
+        
+        updateReminderList();
+      };
+
+      // Expose updateReminderList to outer scope
       window.updateReminderList = updateReminderList;
+      window.openModalForDate = openModalForDate;
     }); // DOMContentLoaded end
   </script>
 
