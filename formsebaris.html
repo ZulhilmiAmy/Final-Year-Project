@@ -165,6 +165,31 @@
       display: inline-block;
       margin-bottom: 5px;
     }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 8px 20px;
+      border-bottom: 2px solid #204d84;
+      font-size: 14px;
+    }
+
+    .breadcrumbs a {
+      color: #204d84;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumbs span {
+      color: #555;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -173,6 +198,13 @@
   <div class="header">
     <img src="https://raw.githubusercontent.com/ZulhilmiAmy/Final-Year-Project/main/Image%20banner/Testbanner.png"
       alt="Banner">
+  </div>
+
+  <div class="top-bar">
+    <div class="breadcrumbs">
+      <a href="#" onclick="confirmGoLogin()">Login</a> &gt;
+      <a href="test(home).html">Halaman Utama</a>
+    </div>
   </div>
 
   <div class="container">
@@ -351,6 +383,13 @@
   </div>
 
   <script>
+
+    function confirmGoLogin() {
+      if (confirm("Adakah anda pasti mahu kembali ke halaman Login?")) {
+        window.location.href = "test(login).html";
+      }
+    }
+    
     let data = {};
 
     function toggleLainTextbox() {
