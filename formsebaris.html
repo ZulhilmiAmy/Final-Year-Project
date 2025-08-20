@@ -196,19 +196,19 @@
       flex-wrap: wrap;
       margin: 0 -10px 15px -10px;
     }
-    
+
     .form-col {
       flex: 1;
       padding: 0 10px;
       min-width: 200px;
     }
-    
+
     .form-section {
       margin-bottom: 25px;
       padding-bottom: 15px;
       border-bottom: 1px dashed #ddd;
     }
-    
+
     .form-section-title {
       font-size: 16px;
       color: #204d84;
@@ -217,7 +217,7 @@
       border-bottom: 2px solid #204d84;
       font-weight: bold;
     }
-    
+
     .checkbox-group {
       background: #f8f8f8;
       padding: 12px;
@@ -225,25 +225,24 @@
       border: 1px solid #eee;
       margin-bottom: 15px;
     }
-    
+
     .checkbox-group label {
       display: flex;
       align-items: center;
       margin-bottom: 8px;
       font-weight: normal;
     }
-    
-    /* Khusus untuk Tarikh Tuntutan yang lebih kecil */
+
     .small-date-input {
       width: 50% !important;
       max-width: 200px;
     }
-    
+
     @media (max-width: 768px) {
       .form-col {
         flex: 100%;
       }
-      
+
       .small-date-input {
         width: 100% !important;
         max-width: 100%;
@@ -283,7 +282,7 @@
     <!-- TAB 1 -->
     <div class="compartment active" id="compartment1">
       <h3>Maklumat Peribadi</h3>
-      
+
       <div class="form-section">
         <div class="form-section-title">Maklumat Rujukan</div>
         <div class="form-row">
@@ -307,7 +306,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-section">
         <div class="form-section-title">Maklumat Asas Pesakit</div>
         <div class="form-row">
@@ -320,22 +319,22 @@
           <div class="form-col">
             <div class="form-group">
               <label>No. KP</label>
-              <input id="nokp">
+              <input id="nokp" maxlength="12" placeholder="Cth: 010203101234" oninput="autoTarikhUmur()">
             </div>
           </div>
         </div>
-        
+
         <div class="form-row">
           <div class="form-col">
             <div class="form-group">
               <label>Tarikh Lahir</label>
-              <input type="date" id="tarikhlahir">
+              <input type="date" id="tarikhlahir" readonly>
             </div>
           </div>
           <div class="form-col">
             <div class="form-group">
               <label>Umur</label>
-              <input id="umur">
+              <input id="umur" readonly>
             </div>
           </div>
           <div class="form-col">
@@ -349,7 +348,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="form-row">
           <div class="form-col">
             <div class="form-group">
@@ -379,12 +378,52 @@
             </div>
           </div>
         </div>
-        
+
+        <!-- Alamat lebih mesra pengguna -->
+        <div class="form-section-title">Alamat</div>
         <div class="form-group">
           <label>Alamat</label>
-          <textarea id="alamat" rows="3"></textarea>
+          <textarea id="alamat" rows="2" placeholder="Alamat Jalan / Taman / No Rumah"></textarea>
         </div>
-        
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Poskod</label>
+              <input id="poskod" maxlength="5">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Bandar</label>
+              <input id="bandar">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Negeri</label>
+              <select id="negeri">
+                <option value="">-- Sila Pilih --</option>
+                <option>Johor</option>
+                <option>Kedah</option>
+                <option>Kelantan</option>
+                <option>Melaka</option>
+                <option>Negeri Sembilan</option>
+                <option>Pahang</option>
+                <option>Perak</option>
+                <option>Perlis</option>
+                <option>Pulau Pinang</option>
+                <option>Sabah</option>
+                <option>Sarawak</option>
+                <option>Selangor</option>
+                <option>Terengganu</option>
+                <option>W.P. Kuala Lumpur</option>
+                <option>W.P. Labuan</option>
+                <option>W.P. Putrajaya</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="form-col">
             <div class="form-group">
@@ -394,7 +433,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-section">
         <div class="form-section-title">Maklumat Perubatan</div>
         <div class="form-row">
@@ -411,7 +450,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="form-row">
           <div class="form-col">
             <div class="form-group">
@@ -426,17 +465,17 @@
             </div>
           </div>
         </div>
-        
+
         <div class="form-group">
           <label>Diagnosa</label>
           <textarea id="diagnosa" rows="2"></textarea>
         </div>
-        
+
         <div class="form-group">
           <label>Prognosis</label>
           <textarea id="prognosis" rows="2"></textarea>
         </div>
-        
+
         <div class="form-group">
           <label>Mobiliti Pesakit</label>
           <select id="mobiliti">
@@ -448,7 +487,7 @@
           </select>
         </div>
       </div>
-      
+
       <div class="button-group">
         <button class="save-btn" onclick="simpan(1)">Simpan</button>
         <button class="next-btn" onclick="next(1)">Seterusnya</button>
@@ -458,7 +497,7 @@
     <!-- TAB 2 -->
     <div class="compartment" id="compartment2">
       <h3>Tujuan Rujukan</h3>
-      
+
       <div class="form-section">
         <div class="form-section-title">BANTUAN PRAKTIK</div>
         <div class="checkbox-group">
@@ -470,7 +509,7 @@
           <label><input type="checkbox" class="bantuanpraktik"> Mengesan Waris</label>
         </div>
       </div>
-      
+
       <div class="form-section">
         <div class="form-section-title">TERAPI SOKONGAN</div>
         <div class="checkbox-group">
@@ -479,7 +518,7 @@
           <label><input type="checkbox" class="terapisokongan"> Intervensi Krisis</label>
         </div>
       </div>
-      
+
       <div class="button-group">
         <button class="back-btn" onclick="back(2)">Kembali</button>
         <button class="save-btn" onclick="simpan(2)">Simpan</button>
@@ -490,7 +529,7 @@
     <!-- TAB 3 -->
     <div class="compartment" id="compartment3">
       <h3>Kategori Kes</h3>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="checkbox-group">
@@ -502,7 +541,7 @@
             <label><input type="checkbox" id="terdampar"> Pesakit Terdampar</label>
           </div>
         </div>
-        
+
         <div class="form-col">
           <div class="checkbox-group">
             <label><input type="checkbox" id="tingkahlaku"> Masalah Tingkah Laku</label>
@@ -513,12 +552,12 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-group">
         <label><input type="checkbox" id="lainCheck" onclick="toggleLainTextbox()"> Lain-lain</label>
         <input id="lain" type="text" placeholder="Sila nyatakan" style="display:none; margin-top:5px;">
       </div>
-      
+
       <div class="button-group">
         <button class="back-btn" onclick="back(3)">Kembali</button>
         <button class="save-btn" onclick="simpan(3)">Simpan</button>
@@ -529,7 +568,7 @@
     <!-- TAB 4 -->
     <div class="compartment" id="compartment4">
       <h3>Maklumat Perujuk</h3>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -565,7 +604,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -588,7 +627,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="button-group">
         <button class="back-btn" onclick="back(4)">Kembali</button>
         <button class="save-btn" onclick="simpan(4)">Simpan</button>
@@ -599,7 +638,7 @@
     <!-- TAB 5 -->
     <div class="compartment" id="compartment5">
       <h3>Rujukan Agensi</h3>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -614,7 +653,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -629,7 +668,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -644,7 +683,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -665,7 +704,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -674,7 +713,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="button-group">
         <button class="back-btn" onclick="back(5)">Kembali</button>
         <button class="save-btn" onclick="simpan(5)">Simpan</button>
@@ -685,7 +724,7 @@
     <!-- TAB 6 -->
     <div class="compartment" id="compartment6">
       <h3>Tarikh Temu Janji</h3>
-      
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -706,12 +745,12 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-group">
         <label>Catatan Temu Janji</label>
         <textarea id="catatantemujanji" rows="3" placeholder="Catatan tambahan untuk temu janji"></textarea>
       </div>
-      
+
       <div class="button-group">
         <button class="back-btn" onclick="back(6)">Kembali</button>
         <button class="save-btn" onclick="simpan(6)">Simpan</button>
@@ -789,6 +828,55 @@
         }
       });
     });
+
+    function autoTarikhUmur() {
+      const icInput = document.getElementById("nokp");
+      const dobInput = document.getElementById("tarikhlahir");
+      const ageInput = document.getElementById("umur");
+
+      // Terima nombor dengan/ tanpa sengkang, ambil hanya digit
+      const nokp = (icInput.value || "").replace(/\D/g, "");
+
+      // Jika kurang 6 digit (YYMMDD) — kosongkan
+      if (nokp.length < 6) {
+        dobInput.value = "";
+        ageInput.value = "";
+        return;
+      }
+
+      const yy = parseInt(nokp.slice(0, 2), 10);
+      const mm = parseInt(nokp.slice(2, 4), 10);
+      const dd = parseInt(nokp.slice(4, 6), 10);
+
+      // Validasi asas bulan & hari
+      if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return;
+
+      const today = new Date();
+      const century = (yy <= (today.getFullYear() % 100)) ? 2000 : 1900;
+      const year = century + yy;
+
+      // Bina tarikh & sahkan (elak 31/02 dsb.)
+      const candidate = new Date(year, mm - 1, dd);
+      if (
+        candidate.getFullYear() !== year ||
+        candidate.getMonth() !== (mm - 1) ||
+        candidate.getDate() !== dd
+      ) return;
+
+      // Format tempatan untuk <input type="date"> (YYYY-MM-DD) — tanpa UTC/ISO
+      const pad2 = n => String(n).padStart(2, "0");
+      dobInput.value = `${year}-${pad2(mm)}-${pad2(dd)}`;
+
+      // Kira umur
+      let age = today.getFullYear() - year;
+      const belumSambutHariLahir =
+        (today.getMonth() < (mm - 1)) ||
+        (today.getMonth() === (mm - 1) && today.getDate() < dd);
+      if (belumSambutHariLahir) age -= 1;
+
+      ageInput.value = age;
+    }
   </script>
 </body>
+
 </html>
