@@ -248,8 +248,23 @@
         max-width: 100%;
       }
     }
+
+    #notif {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+    }
   </style>
 </head>
+
+<div id="notif">Data berjaya disimpan! ✅</div>
 
 <body>
 
@@ -781,7 +796,7 @@
       switchTab(num - 1);
     }
 
-    function simpan(num) {
+    function simpan(num, showNotif = true) {
       let inputs = document.querySelectorAll(`#compartment${num} input, #compartment${num} textarea, #compartment${num} select`);
       inputs.forEach(i => {
         if (i.type === "checkbox") {
@@ -791,7 +806,30 @@
         }
       });
       console.log(`Bahagian ${num} disimpan`, data);
+
+      // hanya tunjuk notifikasi kalau showNotif = true
+      if (showNotif) {
+        const notif = document.getElementById("notif");
+        notif.innerText = `Bahagian ${num} berjaya disimpan! ✅`;
+        notif.style.display = "block";
+
+        setTimeout(() => {
+          notif.style.display = "none";
+        }, 2000);
+      }
     }
+
+    function next(num) {
+      simpan(num, true); // Simpan + tunjuk notifikasi
+      document.querySelector(`.tab[data-tab="${num + 1}"]`).classList.remove('disabled');
+      switchTab(num + 1);
+    }
+
+    function back(num) {
+      simpan(num, false); // Simpan tapi JANGAN tunjuk notifikasi
+      switchTab(num - 1);
+    }
+
 
     function hantar() {
       simpan(6);
