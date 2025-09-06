@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Maklumat Pesakit - 6 Tab</title>
+  <title>SPeKSi - Sistem Maklumat Pesakit</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -30,7 +30,7 @@
 
     .container {
       max-width: 1200px;
-      margin: 20px;
+      margin: 20px auto;
       background-color: white;
       padding: 10px 20px;
       border-radius: 5px;
@@ -189,6 +189,65 @@
       color: #555;
       font-weight: bold;
     }
+
+    /* Layout improvements */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -10px 15px -10px;
+    }
+
+    .form-col {
+      flex: 1;
+      padding: 0 10px;
+      min-width: 200px;
+    }
+
+    .form-section {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .form-section-title {
+      font-size: 16px;
+      color: #204d84;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #204d84;
+      font-weight: bold;
+    }
+
+    .checkbox-group {
+      background: #f8f8f8;
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #eee;
+      margin-bottom: 15px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+
+    .small-date-input {
+      width: 50% !important;
+      max-width: 200px;
+    }
+
+    @media (max-width: 768px) {
+      .form-col {
+        flex: 100%;
+      }
+
+      .small-date-input {
+        width: 100% !important;
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 
@@ -223,25 +282,199 @@
     <!-- TAB 1 -->
     <div class="compartment active" id="compartment1">
       <h3>Maklumat Peribadi</h3>
-      <div class="form-group"><label>Tarikh Rujukan Diterima</label><input type="date" id="tarikhrujukan"></div>
-      <div class="form-group"><label>Tarikh Tindakbalas Awal</label><input type="date" id="tindakawal"></div>
-      <div class="form-group"><label>No. Fail JKSP</label><input id="nofile" readonly></div>
-      <div class="form-group"><label>Nama</label><input id="nama"></div>
-      <div class="form-group"><label>Alamat</label><textarea id="alamat"></textarea></div>
-      <div class="form-group"><label>No. Tel.</label><input id="notel"></div>
-      <div class="form-group"><label>No. KP</label><input id="nokp"></div>
-      <div class="form-group"><label>Tarikh Lahir</label><input type="date" id="tarikhlahir"></div>
-      <div class="form-group"><label>Jantina</label><input id="jantina"></div>
-      <div class="form-group"><label>Umur</label><input id="umur"></div>
-      <div class="form-group"><label>Agama</label><input id="agama"></div>
-      <div class="form-group"><label>Bangsa</label><input id="bangsa"></div>
-      <div class="form-group"><label>No. Daftar</label><input id="nodaftar"></div>
-      <div class="form-group"><label>Wad / Klinik</label><input id="wadklinik"></div>
-      <div class="form-group"><label>Tarikh Masuk Wad</label><input type="date" id="tarikhmasuk"></div>
-      <div class="form-group"><label>Tarikh Dijangka Discaj</label><input type="date" id="tarikhdiscaj"></div>
-      <div class="form-group"><label>Diagnosa</label><input id="diagnosa"></div>
-      <div class="form-group"><label>Prognosis</label><input id="prognosis"></div>
-      <div class="form-group"><label>Mobiliti Pesakit</label><input id="mobiliti"></div>
+
+      <div class="form-section">
+        <div class="form-section-title">Maklumat Rujukan</div>
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Tarikh Rujukan Diterima</label>
+              <input type="date" id="tarikhrujukan">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Tarikh Tindakbalas Awal</label>
+              <input type="date" id="tindakawal">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>No. Fail JKSP</label>
+              <input id="nofile" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Maklumat Asas Pesakit</div>
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Nama</label>
+              <input id="nama">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>No. KP</label>
+              <input id="nokp" maxlength="12" placeholder="Cth: 010203101234" oninput="autoTarikhUmur()">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Tarikh Lahir</label>
+              <input type="date" id="tarikhlahir" readonly>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Umur</label>
+              <input id="umur" readonly>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Jantina</label>
+              <input id="jantina" readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Agama</label>
+              <select id="agama">
+                <option value="">-- Sila Pilih --</option>
+                <option value="Islam">Islam</option>
+                <option value="Buddha">Buddha</option>
+                <option value="Hindu">Hindu</option>
+                <option value="Kristian">Kristian</option>
+                <option value="Lain">Lain-lain</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Bangsa</label>
+              <select id="bangsa">
+                <option value="">-- Sila Pilih --</option>
+                <option value="Melayu">Melayu</option>
+                <option value="Cina">Cina</option>
+                <option value="India">India</option>
+                <option value="Bumiputera Sabah">Bumiputera Sabah</option>
+                <option value="Bumiputera Sarawak">Bumiputera Sarawak</option>
+                <option value="Lain">Lain-lain</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section-title">Alamat</div>
+        <div class="form-group">
+          <label>Alamat</label>
+          <textarea id="alamat" rows="2" placeholder="Alamat Jalan / Taman / No Rumah"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Poskod</label>
+              <input id="poskod" maxlength="5">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Bandar</label>
+              <input id="bandar">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Negeri</label>
+              <select id="negeri">
+                <option value="">-- Sila Pilih --</option>
+                <option>Johor</option>
+                <option>Kedah</option>
+                <option>Kelantan</option>
+                <option>Melaka</option>
+                <option>Negeri Sembilan</option>
+                <option>Pahang</option>
+                <option>Perak</option>
+                <option>Perlis</option>
+                <option>Pulau Pinang</option>
+                <option>Sabah</option>
+                <option>Sarawak</option>
+                <option>Selangor</option>
+                <option>Terengganu</option>
+                <option>W.P. Kuala Lumpur</option>
+                <option>W.P. Labuan</option>
+                <option>W.P. Putrajaya</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>No. Tel.</label>
+              <input id="notel">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Maklumat Perubatan</div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label>Tarikh Masuk Wad</label>
+              <input type="date" id="tarikhmasuk">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Tarikh Dijangka Discaj</label>
+              <input type="date" id="tarikhdiscaj">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Diagnosa</label>
+          <textarea id="diagnosa" rows="2"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Prognosis</label>
+          <select id="prognosis">
+            <option value="">--Sila Pilih--</option>
+            <option value="Baik (Good)">Baik (Good)</option>
+            <option value="Sederhana (Fair)">Sederhana (Fair)</option>
+            <option value="Tidak Baik (Poor)">Tidak Baik (Poor)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Mobiliti Pesakit</label>
+          <select id="mobiliti">
+            <option value="">-- Sila Pilih --</option>
+            <option value="Berjalan">Berjalan</option>
+            <option value="Kerusi Roda">Kerusi Roda</option>
+            <option value="Crutches">Crutches</option>
+            <option value="Walking Frame">Walking Frame</option>
+            <option value="Bedridden">Bedridden</option>
+          </select>
+        </div>
+      </div>
+
       <div class="button-group">
         <button class="save-btn" onclick="simpan(1)">Simpan</button>
         <button class="next-btn" onclick="next(1)">Seterusnya</button>
@@ -251,21 +484,28 @@
     <!-- TAB 2 -->
     <div class="compartment" id="compartment2">
       <h3>Tujuan Rujukan</h3>
-      <div class="form-group"><span class="category-title">BANTUAN PRAKTIK</span></div>
-      <div class="form-group" style="margin-left:20px;">
-        <label><input type="checkbox" class="bantuanpraktik"> Pembiayaan Peralatan Perubatan</label>
-        <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Rawatan</label>
-        <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Ubat-Ubatan</label>
-        <label><input type="checkbox" class="bantuanpraktik"> Bantuan Am</label>
-        <label><input type="checkbox" class="bantuanpraktik"> Penempatan Institusi</label>
-        <label><input type="checkbox" class="bantuanpraktik"> Mengesan Waris</label>
+
+      <div class="form-section">
+        <div class="form-section-title">BANTUAN PRAKTIK</div>
+        <div class="checkbox-group">
+          <label><input type="checkbox" class="bantuanpraktik"> Pembiayaan Peralatan Perubatan</label>
+          <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Rawatan</label>
+          <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Ubat-Ubatan</label>
+          <label><input type="checkbox" class="bantuanpraktik"> Bantuan Am</label>
+          <label><input type="checkbox" class="bantuanpraktik"> Penempatan Institusi</label>
+          <label><input type="checkbox" class="bantuanpraktik"> Mengesan Waris</label>
+        </div>
       </div>
-      <div class="form-group"><span class="category-title">TERAPI SOKONGAN</span></div>
-      <div class="form-group" style="margin-left:20px;">
-        <label><input type="checkbox" class="terapisokongan"> Khidmat Perundingan</label>
-        <label><input type="checkbox" class="terapisokongan"> Sokongan Emosi</label>
-        <label><input type="checkbox" class="terapisokongan"> Intervensi Krisis</label>
+
+      <div class="form-section">
+        <div class="form-section-title">TERAPI SOKONGAN</div>
+        <div class="checkbox-group">
+          <label><input type="checkbox" class="terapisokongan"> Khidmat Perundingan</label>
+          <label><input type="checkbox" class="terapisokongan"> Sokongan Emosi</label>
+          <label><input type="checkbox" class="terapisokongan"> Intervensi Krisis</label>
+        </div>
       </div>
+
       <div class="button-group">
         <button class="back-btn" onclick="back(2)">Kembali</button>
         <button class="save-btn" onclick="simpan(2)">Simpan</button>
@@ -276,21 +516,35 @@
     <!-- TAB 3 -->
     <div class="compartment" id="compartment3">
       <h3>Kategori Kes</h3>
-      <div class="form-group"><label><input type="checkbox" id="penyakitkronik"> Penyakit Kronik</label></div>
-      <div class="form-group"><label><input type="checkbox" id="penderaananak"> Penderaan Kanak-kanak</label></div>
-      <div class="form-group"><label><input type="checkbox" id="rumahTangga"> Keganasan Rumah Tangga</label></div>
-      <div class="form-group"><label><input type="checkbox" id="ibutnpnikah"> Ibu Tanpa Nikah</label></div>
-      <div class="form-group"><label><input type="checkbox" id="seksual"> Keganasan Seksual</label></div>
-      <div class="form-group"><label><input type="checkbox" id="terdampar"> Pesakit Terdampar</label></div>
-      <div class="form-group"><label><input type="checkbox" id="tingkahlaku"> Masalah Tingkah Laku</label></div>
-      <div class="form-group"><label><input type="checkbox" id="hiv"> HIV POSITIF / AIDS</label></div>
-      <div class="form-group"><label><input type="checkbox" id="dadah"> Kegiatan Dadah / Alkohol</label></div>
-      <div class="form-group"><label><input type="checkbox" id="bunuhdiri"> Cubaan Bunuh Diri</label></div>
-      <div class="form-group"><label><input type="checkbox" id="oku"> OKU</label></div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="penyakitkronik"> Penyakit Kronik</label>
+            <label><input type="checkbox" id="penderaananak"> Penderaan Kanak-kanak</label>
+            <label><input type="checkbox" id="rumahTangga"> Keganasan Rumah Tangga</label>
+            <label><input type="checkbox" id="ibutnpnikah"> Ibu Tanpa Nikah</label>
+            <label><input type="checkbox" id="seksual"> Keganasan Seksual</label>
+            <label><input type="checkbox" id="terdampar"> Pesakit Terdampar</label>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="tingkahlaku"> Masalah Tingkah Laku</label>
+            <label><input type="checkbox" id="hiv"> HIV POSITIF / AIDS</label>
+            <label><input type="checkbox" id="dadah"> Kegiatan Dadah / Alkohol</label>
+            <label><input type="checkbox" id="bunuhdiri"> Cubaan Bunuh Diri</label>
+            <label><input type="checkbox" id="oku"> OKU</label>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label><input type="checkbox" id="lainCheck" onclick="toggleLainTextbox()"> Lain-lain</label>
         <input id="lain" type="text" placeholder="Sila nyatakan" style="display:none; margin-top:5px;">
       </div>
+
       <div class="button-group">
         <button class="back-btn" onclick="back(3)">Kembali</button>
         <button class="save-btn" onclick="simpan(3)">Simpan</button>
@@ -301,43 +555,64 @@
     <!-- TAB 4 -->
     <div class="compartment" id="compartment4">
       <h3>Maklumat Perujuk</h3>
-      <div class="form-group"><label>Nama Perujuk</label><input id="namaperujuk"></div>
-      <div class="form-group"><label>Nama Disiplin</label>
-        <select id="disiplin">
-          <option value="">-- Pilih Disiplin --</option>
-          <option>MED</option>
-          <option>SURG</option>
-          <option>O&amp;G</option>
-          <option>ORTHO</option>
-          <option>PAEDS</option>
-          <option>OFTAL</option>
-          <option>ENT</option>
-          <option>A&amp;E</option>
-          <option>ONCHO</option>
-          <option>PSY</option>
-          <option>REHAB</option>
-          <option>NEFRO</option>
-          <option>URO</option>
-          <option>DERMA</option>
-          <option>NEURO</option>
-          <option>NEUROS</option>
-          <option>HAEMATO</option>
-          <option>CARDIO</option>
-          <option>DLL</option>
-        </select>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Nama Perujuk</label>
+            <input id="namaperujuk">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Nama Disiplin</label>
+            <select id="disiplin">
+              <option value="">-- Pilih Disiplin --</option>
+              <option>MED</option>
+              <option>SURG</option>
+              <option>O&amp;G</option>
+              <option>ORTHO</option>
+              <option>PAEDS</option>
+              <option>OFTAL</option>
+              <option>ENT</option>
+              <option>A&amp;E</option>
+              <option>ONCHO</option>
+              <option>PSY</option>
+              <option>REHAB</option>
+              <option>NEFRO</option>
+              <option>URO</option>
+              <option>DERMA</option>
+              <option>NEURO</option>
+              <option>NEUROS</option>
+              <option>HAEMATO</option>
+              <option>CARDIO</option>
+              <option>ETC</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div class="form-group"><label>Wad / Klinik / JPL / ED</label>
-        <select id="wadrujuk">
-          <option value="">-- Pilih Lokasi --</option>
-          <option>Wad 1</option>
-          <option>Wad 2</option>
-          <option>Klinik A</option>
-          <option>Klinik B</option>
-          <option>JPL</option>
-          <option>ED</option>
-        </select>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Punca Rujukan</label>
+            <select id="wadrujuk">
+              <option value="">-- Pilih Lokasi --</option>
+              <option>Wad</option>
+              <option>KLINIK</option>
+              <option>JPL</option>
+              <option>ED</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Diagnosis</label>
+            <input id="diagnosisrujuk">
+          </div>
+        </div>
       </div>
-      <div class="form-group"><label>Diagnosis</label><input id="diagnosisrujuk"></div>
+
       <div class="button-group">
         <button class="back-btn" onclick="back(4)">Kembali</button>
         <button class="save-btn" onclick="simpan(4)">Simpan</button>
@@ -348,17 +623,82 @@
     <!-- TAB 5 -->
     <div class="compartment" id="compartment5">
       <h3>Rujukan Agensi</h3>
-      <div class="form-group"><label>Nama Agensi</label><input id="agensi"></div>
-      <div class="form-group"><label>Tarikh Laporan Dihantar</label><input type="date" id="tarikhlaporan"></div>
-      <div class="form-group"><label>Tarikh Dokumen Lengkap Diterima</label><input type="date" id="tarikhdoklengkap">
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Nama Agensi</label>
+            <input id="agensi">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Nama Pembekal</label>
+            <input id="pembekal">
+          </div>
+        </div>
       </div>
-      <div class="form-group"><label>Item Dipohon</label><input id="item"></div>
-      <div class="form-group"><label>Tanggungan Pesakit (RM)</label><input type="number" id="tanggung"></div>
-      <div class="form-group"><label>Jumlah Dipohon (RM)</label><input type="number" id="dipohon"></div>
-      <div class="form-group"><label>Nama Pembekal</label><input id="pembekal"></div>
-      <div class="form-group"><label>Tarikh Kelulusan</label><input type="date" id="tarikhlulus"></div>
-      <div class="form-group"><label>Jumlah Kelulusan (RM)</label><input type="number" id="lulus"></div>
-      <div class="form-group"><label>Tarikh Tuntutan</label><input type="date" id="tarikhtuntut"></div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Tarikh Laporan Dihantar</label>
+            <input type="date" id="tarikhlaporan">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Tarikh Dokumen Lengkap Diterima</label>
+            <input type="date" id="tarikhdoklengkap">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Item Dipohon</label>
+            <input id="item">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Tarikh Kelulusan</label>
+            <input type="date" id="tarikhlulus">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Tanggungan Pesakit (RM)</label>
+            <input type="number" id="tanggung">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Jumlah Dipohon (RM)</label>
+            <input type="number" id="dipohon">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Jumlah Kelulusan (RM)</label>
+            <input type="number" id="lulus">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Tarikh Tuntutan</label>
+            <input type="date" id="tarikhtuntut" class="small-date-input">
+          </div>
+        </div>
+      </div>
+
       <div class="button-group">
         <button class="back-btn" onclick="back(5)">Kembali</button>
         <button class="save-btn" onclick="simpan(5)">Simpan</button>
@@ -369,11 +709,33 @@
     <!-- TAB 6 -->
     <div class="compartment" id="compartment6">
       <h3>Tarikh Temu Janji</h3>
-      <div class="form-group"><label>Pegawai Kes</label><input id="pegawaikes"></div>
-      <div class="form-group"><label>Tarikh Temu Janji</label><input type="date" id="tarikhtemujanji"></div>
-      <div class="form-group"><label>Masa Temu Janji</label><input type="time" id="masatemujanji"></div>
-      <div class="form-group"><label>Catatan Temu Janji</label><textarea id="catatantemujanji"
-          placeholder="Catatan tambahan untuk temu janji"></textarea></div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label>Pegawai Kes</label>
+            <input id="pegawaikes">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Tarikh Temu Janji</label>
+            <input type="date" id="tarikhtemujanji">
+          </div>
+        </div>
+        <div class="form-col">
+          <div class="form-group">
+            <label>Masa Temu Janji</label>
+            <input type="time" id="masatemujanji">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Catatan Temu Janji</label>
+        <textarea id="catatantemujanji" rows="3" placeholder="Catatan tambahan untuk temu janji"></textarea>
+      </div>
+
       <div class="button-group">
         <button class="back-btn" onclick="back(6)">Kembali</button>
         <button class="save-btn" onclick="simpan(6)">Simpan</button>
@@ -383,7 +745,6 @@
   </div>
 
   <script>
-
     function confirmGoLogin() {
       if (confirm("Adakah anda pasti mahu kembali ke halaman Login?")) {
         window.location.href = "test(login).html";
@@ -452,9 +813,75 @@
         }
       });
     });
+
+    function autoTarikhUmur() {
+      const icInput = document.getElementById("nokp");
+      const dobInput = document.getElementById("tarikhlahir");
+      const ageInput = document.getElementById("umur");
+      const genderInput = document.getElementById("jantina"); // Tambahan ini
+
+      // Terima nombor dengan/ tanpa sengkang, ambil hanya digit
+      const nokp = (icInput.value || "").replace(/\D/g, "");
+
+      // Jika kurang 6 digit (YYMMDD) — kosongkan
+      if (nokp.length < 6) {
+        dobInput.value = "";
+        ageInput.value = "";
+        genderInput.value = ""; // Tambahan ini
+        return;
+      }
+
+      const yy = parseInt(nokp.slice(0, 2), 10);
+      const mm = parseInt(nokp.slice(2, 4), 10);
+      const dd = parseInt(nokp.slice(4, 6), 10);
+
+      // Validasi asas bulan & hari
+      if (mm < 1 || mm > 12 || dd < 1 || dd > 31) {
+        dobInput.value = "";
+        ageInput.value = "";
+        genderInput.value = ""; // Tambahan ini
+        return;
+      }
+
+      const today = new Date();
+      const century = (yy <= (today.getFullYear() % 100)) ? 2000 : 1900;
+      const year = century + yy;
+
+      // Bina tarikh & sahkan (elak 31/02 dsb.)
+      const candidate = new Date(year, mm - 1, dd);
+      if (
+        candidate.getFullYear() !== year ||
+        candidate.getMonth() !== (mm - 1) ||
+        candidate.getDate() !== dd
+      ) {
+        dobInput.value = "";
+        ageInput.value = "";
+        genderInput.value = ""; // Tambahan ini
+        return;
+      }
+
+      // Format tempatan untuk <input type="date"> (YYYY-MM-DD)
+      const pad2 = n => String(n).padStart(2, "0");
+      dobInput.value = `${year}-${pad2(mm)}-${pad2(dd)}`;
+
+      // Kira umur
+      let age = today.getFullYear() - year;
+      const belumSambutHariLahir =
+        (today.getMonth() < (mm - 1)) ||
+        (today.getMonth() === (mm - 1) && today.getDate() < dd);
+      if (belumSambutHariLahir) age -= 1;
+
+      ageInput.value = age;
+
+      // Tentukan jantina jika 12 digit
+      if (nokp.length >= 12) {
+        const lastDigit = parseInt(nokp.charAt(11), 10);
+        genderInput.value = (lastDigit % 2 === 1) ? "Lelaki" : "Perempuan";
+      } else {
+        genderInput.value = ""; // Tambahan ini
+      }
+    }
   </script>
-
-
 </body>
 
 </html>
