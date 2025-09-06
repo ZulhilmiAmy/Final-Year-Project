@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
       line-height: 1.6;
       background-color: #eef2f7;
     }
+
     .header {
       background-color: #004080;
       color: white;
@@ -21,20 +23,23 @@
       margin: -20px -20px 20px -20px;
       width: calc(100% + 40px);
     }
+
     .header img {
       width: 100%;
       max-height: 180px;
       object-fit: cover;
       display: block;
     }
+
     .container {
       max-width: 1000px;
       margin: 0 auto;
       background-color: white;
       padding: 20px 30px;
       border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
     }
+
     .container h1 {
       margin: 0 0 20px 0;
       color: #004080;
@@ -42,6 +47,7 @@
       padding-bottom: 5px;
       text-align: center;
     }
+
     .form-title {
       color: #007bff;
       font-weight: bold;
@@ -50,48 +56,58 @@
       border-bottom: 1px solid #ccc;
       padding-bottom: 3px;
     }
+
     .section {
       margin-bottom: 25px;
     }
+
     .form-group {
       margin-bottom: 12px;
     }
+
     label {
       font-weight: bold;
       color: #333;
       display: block;
       margin-bottom: 4px;
     }
+
     .static-field {
       border-bottom: 1px dotted #333;
       display: inline-block;
       min-width: 220px;
       padding: 2px 0;
     }
+
     .wide-field {
       min-width: 400px;
     }
+
     .basic-info {
       display: grid;
       grid-template-columns: auto 1fr auto 1fr;
       gap: 8px 20px;
       margin-bottom: 20px;
     }
+
     .label-value {
       border-bottom: 1px dotted #333;
       height: 18px;
     }
+
     .checkbox-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 5px 20px;
     }
+
     .checkbox-list span {
       border-bottom: 1px dotted #333;
       display: inline-block;
       width: 100%;
       padding: 2px 0;
     }
+
     h2 {
       color: #004080;
       font-size: 1.50em;
@@ -100,85 +116,194 @@
       border-left: 4px solid #004080;
       padding-left: 8px;
     }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 16px 20px;
+      border-bottom: 2px solid #204d84;
+      font-size: 14px;
+
+      /* Tambahan untuk sama dengan banner */
+      margin: -20px -20px 20px -20px;
+      width: calc(100% + 40px);
+    }
   </style>
 </head>
+
 <body>
 
-<div class="header">
-  <img src="https://raw.githubusercontent.com/ZulhilmiAmy/Final-Year-Project/main/Image%20banner/Testbanner.png" alt="Test Banner">
-</div>
-
-<div class="container">
-  <div class="section">
-    <h2>1. Maklumat Peribadi Pesakit</h2>
-    <div class="form-group"><label>Nama</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Alamat</label><span class="static-field wide-field"></span></div>
-    <div class="form-group"><label>No. Tel.</label><span class="static-field"></span></div>
-    <div class="form-group"><label>No. KP</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Lahir</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Jantina</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Umur</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Agama</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Bangsa</label><span class="static-field"></span></div>
-    <div class="form-group"><label>No. Daftar</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Wad / Klinik</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Masuk Wad</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Dijangka Discaj</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Diagnosa</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Prognosis</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Mobiliti Pesakit</label><span class="static-field"></span></div>
+  <div class="header">
+    <img src="Testbanner.jpg" alt="Test Banner">
   </div>
 
-  <div class="section">
-    <h2>2. Kategori Kes</h2>
-    <div class="checkbox-list">
-      <span>Penyakit Kronik</span>
-
+  <div class="top-bar">
+    <div class="breadcrumbs">
+      <a href="#">Login</a> &gt;
+      <a href="test(home).html">Halaman Utama</a> &gt;
+      <a href="formsebaris.html">Sistem maklumat pesakit</a> &gt;
+      <a href="history.html">Sejarah Pesakit</a>
     </div>
   </div>
 
-  <div class="section">
-    <h2>3. Tujuan Rujukan</h2>
-    <div class="form-group"><label>Bantuan Praktik</label><span class="static-field"></span></div>
+  <div class="container">
+    <div class="section">
+      <h2>1. Maklumat Peribadi Pesakit</h2>
+      <div class="form-group"><label>Tarikh Rujukan Diterima</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Tindakbalas Awal</label><span class="static-field"></span></div>
+      <div class="form-group"><label>No. Fail JKSP</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Nama</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Alamat</label><span class="static-field wide-field"></span></div>
+      <div class="form-group"><label>No. Tel.</label><span class="static-field"></span></div>
+      <div class="form-group"><label>No. KP</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Lahir</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Jantina</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Umur</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Agama</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Bangsa</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Wad / Klinik</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Masuk Wad</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Dijangka Discaj</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Diagnosa</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Prognosis</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Mobiliti Pesakit</label><span class="static-field"></span></div>
+    </div>
+
+    <div class="section">
+      <h2>2. Tujuan Rujukan</h2>
+      <div class="form-group"><label>Bantuan Praktik</label><span class="static-field"></span></div>
+    </div>
+    <div class="section">
+      <div class="form-group"><label>Terapi Sokongan</label><span class="static-field"></span></div>
+    </div>
+
+    <div class="section">
+      <h2>3. Kategori Kes</h2>
+      <div class="form-group"><label>Kategori</label><span class="static-field"></span></div>
+    </div>
+
+    <div class="section">
+      <h2>4. Maklumat Perujuk</h2>
+      <div class="form-group"><label>Nama Perujuk</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Nama Disiplin</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Punca Rujukan</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Diagnosis</label><span class="static-field"></span></div>
+    </div>
+
+    <div class="section">
+      <h2>6. Rujukan ke Agensi</h2>
+      <div class="form-group"><label>Nama Agensi</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Nama Pembekal</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Laporan Dihantar</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Dokumen Lengkap Diterima</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Item Dipohon</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Kelulusan</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tanggungan Pesakit (RM)</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Jumlah Dipohon (RM)</label><span class="static-field"></span></div>      
+      <div class="form-group"><label>Jumlah Kelulusan (RM)</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Tuntutan</label><span class="static-field"></span></div>
+    </div>
+
+    <div class="section">
+      <h2>7. Temu Janji</h2>
+      <div class="form-group"><label>Pegawai Kes</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Tarikh Temu Janji</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Masa Temu Janji</label><span class="static-field"></span></div>
+      <div class="form-group"><label>Catatan Temu Janji</label><span class="static-field wide-field"></span></div>
+    </div>
   </div>
 
-  <div class="section">
-    <div class="form-group"><label>Terapi Sokongan</label><span class="static-field"></span></div>
-  </div>
+  <script>
+    window.onload = function () {
+      const data = JSON.parse(localStorage.getItem("pesakitData") || "{}");
+      console.log("Data dari localStorage:", data); // Debug
 
-  <div class="section">
-    <h2>4. Maklumat Perujuk</h2>
-    <div class="form-group"><label>Nama Disiplin</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Wad / Klinik / JPL / DD</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Diagnosis</label><span class="static-field"></span></div>
-    
-  </div>
+      function formatDate(d) {
+        if (!d) return "";
+        const dt = new Date(d);
+        if (isNaN(dt)) return d;
+        return dt.toLocaleDateString("ms-MY");
+      }
 
-  <div class="section">
-    <h2>5. Rujukan ke Agensi</h2>
-    <div class="form-group"><label>Nama Agensi</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Laporan Dihantar</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Item Dipohon</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tanggungan Pesakit (RM)</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Jumlah Dipohon (RM)</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Nama Pembekal</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Kelulusan</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Jumlah Kelulusan (RM)</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Tuntutan</label><span class="static-field"></span></div>
-  </div>
+      // Mapping yang lebih tepat antara label dan field ID
+      const mapping = {
+        "Tarikh Rujukan Diterima": "tarikhrujukan",
+        "Tarikh Tindakbalas Awal": "tindakawal",
+        "No. Fail JKSP": "nofile",
+        "Nama": "nama",
+        "Alamat": "alamat",
+        "No. Tel.": "notel",
+        "No. KP": "nokp",
+        "Tarikh Lahir": "tarikhlahir",
+        "Jantina": "jantina",
+        "Umur": "umur",
+        "Agama": "agama",
+        "Bangsa": "bangsa",
+        "No. Daftar": "nodaftar",
+        "Wad / Klinik": "wadklinik",
+        "Tarikh Masuk Wad": "tarikhmasuk",
+        "Tarikh Dijangka Discaj": "tarikhdiscaj",
+        "Diagnosa": "diagnosa",
+        "Prognosis": "prognosis",
+        "Mobiliti Pesakit": "mobiliti",
+        "Kategori": "kategori",
+        "Bantuan Praktik": "bantuanpraktik",
+        "Terapi Sokongan": "terapisokongan",
+        "Nama Disiplin": "disiplin",
+        "Wad / Klinik / JPL / DD": "wadrujuk",
+        "Diagnosis": "diagnosisrujuk",
+        "Nama Agensi": "agensi",
+        "Tarikh Laporan Dihantar": "tarikhlaporan",
+        "Item Dipohon": "item",
+        "Tanggungan Pesakit (RM)": "tanggung",
+        "Jumlah Dipohon (RM)": "dipohon",
+        "Nama Pembekal": "pembekal",
+        "Tarikh Kelulusan": "tarikhlulus",
+        "Jumlah Kelulusan (RM)": "lulus",
+        "Tarikh Tuntutan": "tarikhtuntut",
+        "Pegawai Kes": "pegawaikes",
+        "Tarikh Temu Janji": "tarikhtemujanji",
+        "Masa Temu Janji": "masatemujanji",
+        "Tempat Temu Janji": "", // Tiada dalam form
+        "Catatan Temu Janji": "catatantemujanji"
+      };
 
-  <div class="section">
-    <h2>6. Temu Janji</h2>
-    <div class="form-group"><label>Pegawai Kes</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tarikh Temu Janji</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Masa Temu Janji</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Tempat Temu Janji</label><span class="static-field"></span></div>
-    <div class="form-group"><label>Catatan Temu Janji</label><span class="static-field wide-field"></span></div>
-  </div>
-</div>
+      document.querySelectorAll(".form-group").forEach(grp => {
+        const labelEl = grp.querySelector("label");
+        if (!labelEl) return;
+
+        const labelText = labelEl.textContent.trim();
+        const fieldId = mapping[labelText];
+
+        if (!fieldId) {
+          console.log("Tidak jumpa mapping untuk:", labelText);
+          return;
+        }
+
+        let value = data[fieldId] || "";
+
+        // Format array values (untuk checkbox groups)
+        if (Array.isArray(value)) {
+          value = value.join(", ");
+        }
+
+        // Format dates
+        if (fieldId.includes("tarikh") && value) {
+          value = formatDate(value);
+        }
+
+        const span = grp.querySelector(".static-field");
+        if (span) {
+          span.textContent = value;
+          // Tambah placeholder jika kosong untuk visual
+          if (!value) span.textContent = "-";
+        }
+      });
+    };
+  </script>
 
 </body>
+
 </html>
-
-
-

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem Maklumat Pesakit</title>
-  <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
@@ -13,6 +12,7 @@
       padding: 20px;
       line-height: 1.6;
       background-color: #f5f5f5;
+      counter-reset: section; /* reset counter */
     }
     .header {
       background-color: #111;
@@ -62,8 +62,8 @@
       margin-bottom: 6px;
     }
     label {
-      width: 85px; /* shorter for tighter fit */
-      margin-right: 2px; /* minimal gap */
+      width: 85px;
+      margin-right: 2px;
       font-weight: bold;
       color: #333;
     }
@@ -80,15 +80,23 @@
       margin-bottom: 15px;
       padding-bottom: 5px;
       border-bottom: 1px solid #eee;
+      counter-increment: section; /* tambah nombor */
+    }
+    .form-title::before {
+      content: counter(section) ". "; /* auto nombor */
     }
     .label-value {
       flex: 1;
-      padding: 2px 0; /* very tight padding */
+      padding: 2px 0;
       border-bottom: 1px dashed #ccc;
     }
-    /* View button inline style */
-    .view-button {
-      background-color: #4CAF50;
+    /* Buttons style */
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      margin-left: auto; /* Tolak ke kanan */
+    }
+    .action-button {
       color: white;
       border: none;
       border-radius: 4px;
@@ -99,13 +107,12 @@
       align-items: center;
       justify-content: center;
     }
-    .view-button:hover {
-      background-color: #45a049;
-    }
-    .inline-button {
-      flex: 0 0 auto;
-      padding-left: 10px;
-    }
+    .action-button.view { background-color: #4CAF50; }
+    .action-button.view:hover { background-color: #45a049; }
+    .action-button.edit { background-color: #2196F3; }
+    .action-button.edit:hover { background-color: #1976D2; }
+    .action-button.print { background-color: #FF9800; }
+    .action-button.print:hover { background-color: #F57C00; }
   </style>
 </head>
 <body>
@@ -117,38 +124,60 @@
 <div class="container">
   <h1>Sejarah Pesakit</h1>
   
-  <div class="compartment active" id="compartment1">
+  <div class="compartment active">
     <div class="form-title">Maklumat Asas</div>
-    
     <div class="form-row">
       <div class="form-group">
-        <label for="name"><b>Nama:</b></label>
-        <div class="label-value">Ahmad bin Ali</div>
+        <label><b>Nama:</b></label>
+        <div class="label-value"></div>
       </div>
       <div class="form-group">
-        <label for="noKP"><b>No. KP:</b></label>
-        <div class="label-value">900101-01-1234</div>
+        <label><b>No. KP:</b></label>
+        <div class="label-value"></div>
       </div>
     </div>
-    
     <div class="date-row">
       <div class="date-group">
-        <label for="tarikh"><b>Tarikh:</b></label>
-        <div class="label-value">09/08/2025</div>
+        <label><b>Tarikh:</b></label>
+        <div class="label-value"></div>
       </div>
       <div class="date-group">
-        <label for="kes"><b>No. Kes:</b></label>
-        <div class="label-value">KES12345</div>
+        <label><b>No. Kes:</b></label>
+        <div class="label-value"></div>
       </div>
-      <div class="inline-button">
-        <button class="view-button" title="Lihat Maklumat" onclick="window.location.href='view.html'">
-          <i class="fas fa-eye"></i>
-        </button>
+      <div class="action-buttons">
+        <a href="view1.html" class="action-button view"><i class="fas fa-eye"></i></a>
+        <a href="formsebaris.html" class="action-button edit"><i class="fas fa-edit"></i></a>
+        <button class="action-button print" onclick="window.print()"><i class="fas fa-print"></i></button>
+      </div>
+  </div>
+
+</div>
+     <div class="compartment active">
+    <div class="form-title">Maklumat Asas</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label><b>Nama:</b></label>
+        <div class="label-value"></div>
+      </div>
+      <div class="form-group">
+        <label><b>No. KP:</b></label>
+        <div class="label-value"></div>
       </div>
     </div>
-
-  </div>
-</div>
-
+    <div class="date-row">
+      <div class="date-group">
+        <label><b>Tarikh:</b></label>
+        <div class="label-value"></div>
+      </div>
+      <div class="date-group">
+        <label><b>No. Kes:</b></label>
+        <div class="label-value"></div>
+      </div>
+      <div class="action-buttons">
+        <a href="view.html" class="action-button view"><i class="fas fa-eye"></i></a>
+        <a href="view1.html" class="action-button edit"><i class="fas fa-edit"></i></a>
+        <button class="action-button print" onclick="window.print()"><i class="fas fa-print"></i></button>
+      </div>
 </body>
 </html>
