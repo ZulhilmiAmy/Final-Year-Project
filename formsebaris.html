@@ -262,6 +262,8 @@
       z-index: 1000;
     }
   </style>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 </head>
 
 <div id="notif">Data berjaya disimpan! ✅</div>
@@ -398,18 +400,6 @@
         <div class="form-row">
           <div class="form-col">
             <div class="form-group">
-              <label>Poskod</label>
-              <input id="poskod" maxlength="5">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Bandar</label>
-              <input id="bandar">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
               <label>Negeri</label>
               <select id="negeri">
                 <option value="">-- Sila Pilih --</option>
@@ -432,6 +422,18 @@
               </select>
             </div>
           </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Bandar</label>
+              <input id="bandar">
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label>Poskod</label>
+              <input id="poskod" maxlength="5">
+            </div>
+          </div>  
         </div>
 
         <div class="form-row">
@@ -725,6 +727,8 @@
     <div class="compartment" id="compartment6">
       <h3>Tarikh Temu Janji</h3>
 
+      <div id="calendar" style="margin:20px 0;"></div>
+
       <div class="form-row">
         <div class="form-col">
           <div class="form-group">
@@ -753,7 +757,7 @@
 
       <div class="button-group">
         <button class="back-btn" onclick="back(6)">Kembali</button>
-        <button class="save-btn" onclick="simpan(6)">Simpan</button>
+        <button class="save-btn" onclick="simpanTemujanji()">Simpan Temu Janji</button>
         <button class="next-btn" onclick="hantar()">Hantar Semua</button>
       </div>
     </div>
@@ -918,6 +922,48 @@
       } else {
         genderInput.value = ""; // Tambahan ini
       }
+    }
+
+    let calendar;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: 500,
+        locale: 'ms',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: [] // Mula dengan kosong
+      });
+      calendar.render();
+    });
+
+    function simpanTemujanji() {
+      const pegawai = document.getElementById('pegawaikes').value;
+      const tarikh = document.getElementById('tarikhtemujanji').value;
+      const masa = document.getElementById('masatemujanji').value;
+      const catatan = document.getElementById('catatantemujanji').value;
+
+      if (!tarikh || !masa) {
+        alert("Sila isi tarikh dan masa temu janji!");
+        return;
+      }
+
+      // Gabungkan tarikh + masa jadi ISO format
+      const startDateTime = tarikh + "T" + masa;
+
+      // Tambah event dalam calendar
+      calendar.addEvent({
+        title: `${pegawai || "Temu Janji"} - ${catatan || ""}`,
+        start: startDateTime,
+        allDay: false
+      });
+
+      alert("Temu janji berjaya disimpan!");
     }
   </script>
 </body>
