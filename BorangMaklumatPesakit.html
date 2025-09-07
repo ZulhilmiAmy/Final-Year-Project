@@ -793,7 +793,7 @@
             <div class="button-group">
                 <button class="back-btn" onclick="back(6)">Kembali</button>
                 <button class="save-btn" onclick="simpanTemujanji()">Simpan Temu Janji</button>
-                <button class="next-btn" onclick="hantar()">Hantar Semua</button>
+               <button class="next-btn" onclick="hantar()">Hantar Semua</button>
             </div>
         </div>
     </div>
@@ -911,6 +911,7 @@
             simpan(6);
             console.log("Semua data dihantar:", data);
             alert("Semua maklumat telah dihantar!");
+            window.location.href = "printborang.html";
         }
 
         // Auto-generate No. Fail JKSP bila page load
