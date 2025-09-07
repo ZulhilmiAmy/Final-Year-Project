@@ -2,881 +2,1081 @@
 <html lang="ms">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPeKSi - Sistem Maklumat Pesakit</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: linear-gradient(to bottom right, #e6f2f8, #f0f6fa);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPeKSi - Sistem Maklumat Pesakit</title>
+    <style>
+        /* CSS yang sudah ada */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom right, #e6f2f8, #f0f6fa);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-    .header {
-      background-color: #111;
-      color: white;
-      text-align: center;
-    }
+        .header {
+            background-color: #111;
+            color: white;
+            text-align: center;
+        }
 
-    .header img {
-      width: 100%;
-      height: auto;
-      display: block;
-      max-height: 140px;
-      object-fit: cover;
-    }
+        .header img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 140px;
+            object-fit: cover;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      background-color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .container h1 {
-      margin: 5px 0 10px 0;
-      color: #333;
-      font-size: x-large;
-    }
+        .container h1 {
+            margin: 5px 0 10px 0;
+            color: #333;
+            font-size: x-large;
+        }
 
-    .compartment {
-      display: none;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 20px;
-      background-color: #f9f9f9;
-      margin-bottom: 20px;
-    }
+        .compartment {
+            display: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
 
-    .compartment.active {
-      display: block;
-    }
+        .compartment.active {
+            display: block;
+        }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #555;
-    }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-    textarea {
-      resize: vertical;
-    }
+        textarea {
+            resize: vertical;
+        }
 
-    input[type="checkbox"] {
-      width: auto;
-      margin-right: 8px;
-    }
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
 
-    .button-group {
-      margin-top: 20px;
-      text-align: right;
-    }
+        .button-group {
+            margin-top: 20px;
+            text-align: right;
+        }
 
-    button {
-      padding: 10px 20px;
-      margin-left: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-    .save-btn {
-      background-color: #4CAF50;
-      color: white;
-    }
+        .save-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
 
-    .next-btn {
-      background-color: #2196F3;
-      color: white;
-    }
+        .next-btn {
+            background-color: #2196F3;
+            color: white;
+        }
 
-    .back-btn {
-      background-color: #f44336;
-      color: white;
-    }
+        .back-btn {
+            background-color: #f44336;
+            color: white;
+        }
 
-    .save-btn:hover {
-      background-color: #3e8e41;
-    }
+        .save-btn:hover {
+            background-color: #3e8e41;
+        }
 
-    .next-btn:hover {
-      background-color: #0b7dda;
-    }
+        .next-btn:hover {
+            background-color: #0b7dda;
+        }
 
-    .back-btn:hover {
-      background-color: #da190b;
-    }
+        .back-btn:hover {
+            background-color: #da190b;
+        }
 
-    .tab-container {
-      display: flex;
-      flex-wrap: wrap;
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 20px;
-    }
+        .tab-container {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
 
-    .tab {
-      padding: 10px 15px;
-      background-color: #f1f1f1;
-      border: 1px solid #ddd;
-      border-bottom: none;
-      border-radius: 5px 5px 0 0;
-      margin-right: 5px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+        .tab {
+            padding: 10px 15px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-    .tab.active {
-      background-color: #f9f9f9;
-      font-weight: bold;
-      color: #2196F3;
-    }
+        .tab.active {
+            background-color: #f9f9f9;
+            font-weight: bold;
+            color: #2196F3;
+        }
 
-    .tab.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+        .tab.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
-    .category-title {
-      font-weight: bold;
-      background-color: #eee;
-      padding: 5px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 5px;
-    }
+        .category-title {
+            font-weight: bold;
+            background-color: #eee;
+            padding: 5px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8f9fa;
-      padding: 16px 20px;
-      border-bottom: 2px solid #204d84;
-      font-size: 14px;
-    }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 16px 20px;
+            border-bottom: 2px solid #204d84;
+            font-size: 14px;
+        }
 
-    .breadcrumbs a {
-      color: #204d84;
-      text-decoration: none;
-      font-weight: 500;
-    }
+        .breadcrumbs a {
+            color: #204d84;
+            text-decoration: none;
+            font-weight: 500;
+        }
 
-    .breadcrumbs a:hover {
-      text-decoration: underline;
-    }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
 
-    .breadcrumbs span {
-      color: #555;
-      font-weight: bold;
-    }
+        .breadcrumbs span {
+            color: #555;
+            font-weight: bold;
+        }
 
-    /* Layout improvements */
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      margin: 0 -10px 15px -10px;
-    }
+        /* Layout improvements */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px 15px -10px;
+        }
 
-    .form-col {
-      flex: 1;
-      padding: 0 10px;
-      min-width: 200px;
-    }
+        .form-col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 200px;
+        }
 
-    .form-section {
-      margin-bottom: 25px;
-      padding-bottom: 15px;
-      border-bottom: 1px dashed #ddd;
-    }
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
 
-    .form-section-title {
-      font-size: 16px;
-      color: #204d84;
-      margin-bottom: 15px;
-      padding-bottom: 5px;
-      border-bottom: 2px solid #204d84;
-      font-weight: bold;
-    }
+        .form-section-title {
+            font-size: 16px;
+            color: #204d84;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #204d84;
+            font-weight: bold;
+        }
 
-    .checkbox-group {
-      background: #f8f8f8;
-      padding: 12px;
-      border-radius: 5px;
-      border: 1px solid #eee;
-      margin-bottom: 15px;
-    }
+        .checkbox-group {
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            margin-bottom: 15px;
+        }
 
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-      font-weight: normal;
-    }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
 
-    .small-date-input {
-      width: 50% !important;
-      max-width: 200px;
-    }
+        .small-date-input {
+            width: 50% !important;
+            max-width: 200px;
+        }
 
-    @media (max-width: 768px) {
-      .form-col {
-        flex: 100%;
-      }
+        @media (max-width: 768px) {
+            .form-col {
+                flex: 100%;
+            }
 
-      .small-date-input {
-        width: 100% !important;
-        max-width: 100%;
-      }
-    }
-  </style>
+            .small-date-input {
+                width: 100% !important;
+                max-width: 100%;
+            }
+        }
+
+        #notif {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        /* Calendar container styling */
+        #calendar-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        #calendar {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        /* Style untuk event dalam kalender */
+        .fc-event {
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 2px 0;
+        }
+
+        #mobiliti option[value="Crutches"],
+        #mobiliti option[value="Walking Frame"],
+        #mobiliti option[value="Bedridden"] {
+            font-style: italic;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 </head>
+
+<div id="notif">Data berjaya disimpan! ✅</div>
 
 <body>
 
-  <div class="header">
-    <img src="https://raw.githubusercontent.com/ZulhilmiAmy/Final-Year-Project/main/Image%20banner/Testbanner.png"
-      alt="Banner">
-  </div>
-
-  <div class="top-bar">
-    <div class="breadcrumbs">
-      <a href="#" onclick="confirmGoLogin()">Login</a> &gt;
-      <a href="test(home).html">Halaman Utama</a> &gt;
-      <a href="formsebaris.html">Sistem Maklumat Pesakit</a>
-    </div>
-  </div>
-
-  <div class="container">
-    <h1>Sistem Maklumat Pesakit</h1>
-
-    <!-- Tab Navigation -->
-    <div class="tab-container">
-      <div class="tab active" data-tab="1">1. Maklumat Peribadi</div>
-      <div class="tab disabled" data-tab="2">2. Tujuan Rujukan</div>
-      <div class="tab disabled" data-tab="3">3. Kategori Kes</div>
-      <div class="tab disabled" data-tab="4">4. Maklumat Perujuk</div>
-      <div class="tab disabled" data-tab="5">5. Rujukan Agensi</div>
-      <div class="tab disabled" data-tab="6">6. Tarikh Temu Janji</div>
+    <div class="header">
+        <img src="https://raw.githubusercontent.com/ZulhilmiAmy/Final-Year-Project/main/Image%20banner/Banner-SPeKSi.png"
+            alt="Banner">
     </div>
 
-    <!-- TAB 1 -->
-    <div class="compartment active" id="compartment1">
-      <h3>Maklumat Peribadi</h3>
-
-      <div class="form-section">
-        <div class="form-section-title">Maklumat Rujukan</div>
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>Tarikh Rujukan Diterima</label>
-              <input type="date" id="tarikhrujukan">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Tarikh Tindakbalas Awal</label>
-              <input type="date" id="tindakawal">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>No. Fail JKSP</label>
-              <input id="nofile" readonly>
-            </div>
-          </div>
+    <div class="top-bar">
+        <div class="breadcrumbs">
+            <a>Login</a> &gt;
+            <a href="test(home).html">Halaman Utama</a> &gt;
+            <a>Sistem Maklumat Pesakit</a>
         </div>
-      </div>
-
-      <div class="form-section">
-        <div class="form-section-title">Maklumat Asas Pesakit</div>
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>Nama</label>
-              <input id="nama">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>No. KP</label>
-              <input id="nokp" maxlength="12" placeholder="Cth: 010203101234" oninput="autoTarikhUmur()">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>Tarikh Lahir</label>
-              <input type="date" id="tarikhlahir" readonly>
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Umur</label>
-              <input id="umur" readonly>
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Jantina</label>
-              <select id="jantina">
-                <option value="">-- Sila Pilih --</option>
-                <option value="Lelaki">Lelaki</option>
-                <option value="Perempuan">Perempuan</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>Agama</label>
-              <select id="agama">
-                <option value="">-- Sila Pilih --</option>
-                <option value="Islam">Islam</option>
-                <option value="Buddha">Buddha</option>
-                <option value="Hindu">Hindu</option>
-                <option value="Kristian">Kristian</option>
-                <option value="Lain">Lain-lain</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Bangsa</label>
-              <select id="bangsa">
-                <option value="">-- Sila Pilih --</option>
-                <option value="Melayu">Melayu</option>
-                <option value="Cina">Cina</option>
-                <option value="India">India</option>
-                <option value="Bumiputera Sabah">Bumiputera Sabah</option>
-                <option value="Bumiputera Sarawak">Bumiputera Sarawak</option>
-                <option value="Lain">Lain-lain</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Alamat lebih mesra pengguna -->
-        <div class="form-section-title">Alamat</div>
-        <div class="form-group">
-          <label>Alamat</label>
-          <textarea id="alamat" rows="2" placeholder="Alamat Jalan / Taman / No Rumah"></textarea>
-        </div>
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>Poskod</label>
-              <input id="poskod" maxlength="5">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Bandar</label>
-              <input id="bandar">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Negeri</label>
-              <select id="negeri">
-                <option value="">-- Sila Pilih --</option>
-                <option>Johor</option>
-                <option>Kedah</option>
-                <option>Kelantan</option>
-                <option>Melaka</option>
-                <option>Negeri Sembilan</option>
-                <option>Pahang</option>
-                <option>Perak</option>
-                <option>Perlis</option>
-                <option>Pulau Pinang</option>
-                <option>Sabah</option>
-                <option>Sarawak</option>
-                <option>Selangor</option>
-                <option>Terengganu</option>
-                <option>W.P. Kuala Lumpur</option>
-                <option>W.P. Labuan</option>
-                <option>W.P. Putrajaya</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>No. Tel.</label>
-              <input id="notel">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <div class="form-section-title">Maklumat Perubatan</div>
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>No. Daftar</label>
-              <input id="nodaftar">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Wad / Klinik</label>
-              <input id="wadklinik">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-col">
-            <div class="form-group">
-              <label>Tarikh Masuk Wad</label>
-              <input type="date" id="tarikhmasuk">
-            </div>
-          </div>
-          <div class="form-col">
-            <div class="form-group">
-              <label>Tarikh Dijangka Discaj</label>
-              <input type="date" id="tarikhdiscaj">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Diagnosa</label>
-          <textarea id="diagnosa" rows="2"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Prognosis</label>
-          <textarea id="prognosis" rows="2"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Mobiliti Pesakit</label>
-          <select id="mobiliti">
-            <option value="">-- Sila Pilih --</option>
-            <option value="Bebas">Bebas</option>
-            <option value="Kerusi Roda">Kerusi Roda</option>
-            <option value="Tempat Tidur">Tempat Tidur</option>
-            <option value="Bantuan">Perlu Bantuan</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="button-group">
-        <button class="save-btn" onclick="simpan(1)">Simpan</button>
-        <button class="next-btn" onclick="next(1)">Seterusnya</button>
-      </div>
     </div>
 
-    <!-- TAB 2 -->
-    <div class="compartment" id="compartment2">
-      <h3>Tujuan Rujukan</h3>
+    <div class="container">
+        <h1>Sistem Maklumat Pesakit</h1>
 
-      <div class="form-section">
-        <div class="form-section-title">BANTUAN PRAKTIK</div>
-        <div class="checkbox-group">
-          <label><input type="checkbox" class="bantuanpraktik"> Pembiayaan Peralatan Perubatan</label>
-          <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Rawatan</label>
-          <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Ubat-Ubatan</label>
-          <label><input type="checkbox" class="bantuanpraktik"> Bantuan Am</label>
-          <label><input type="checkbox" class="bantuanpraktik"> Penempatan Institusi</label>
-          <label><input type="checkbox" class="bantuanpraktik"> Mengesan Waris</label>
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tab active" data-tab="1">1. Maklumat Peribadi</div>
+            <div class="tab disabled" data-tab="2">2. Tujuan Rujukan</div>
+            <div class="tab disabled" data-tab="3">3. Kategori Kes</div>
+            <div class="tab disabled" data-tab="4">4. Maklumat Perujuk</div>
+            <div class="tab disabled" data-tab="5">5. Rujukan Agensi</div>
+            <div class="tab disabled" data-tab="6">6. Tarikh Temu Janji</div>
         </div>
-      </div>
 
-      <div class="form-section">
-        <div class="form-section-title">TERAPI SOKONGAN</div>
-        <div class="checkbox-group">
-          <label><input type="checkbox" class="terapisokongan"> Khidmat Perundingan</label>
-          <label><input type="checkbox" class="terapisokongan"> Sokongan Emosi</label>
-          <label><input type="checkbox" class="terapisokongan"> Intervensi Krisis</label>
+        <!-- TAB 1 -->
+        <div class="compartment active" id="compartment1">
+            <h3>Maklumat Peribadi</h3>
+
+            <div class="form-section">
+                <div class="form-section-title">Maklumat Rujukan</div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Tarikh Rujukan Diterima</label>
+                            <input type="date" id="tarikhrujukan">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Tarikh Tindakbalas Awal</label>
+                            <input type="date" id="tindakawal">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>No. Fail JKSP</label>
+                            <input id="nofile" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Maklumat Asas Pesakit</div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input id="nama">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>No. KP</label>
+                            <input id="nokp" maxlength="12" placeholder="Cth: 010203101234" oninput="autoTarikhUmur()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Tarikh Lahir</label>
+                            <input type="date" id="tarikhlahir" readonly>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Umur</label>
+                            <input id="umur" readonly>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Jantina</label>
+                            <input id="jantina" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Agama</label>
+                            <select id="agama" onchange="toggleAgamaLain()">
+                                <option value="" disabled selected hidden>-- Sila Pilih --</option>
+                                <option value="Islam">Islam</option>
+                                <option value="Buddha">Buddha</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Kristian">Kristian</option>
+                                <option value="Lain">Lain-lain</option>
+                            </select>
+                            <input type="text" id="agamaLain" placeholder="Sila nyatakan"
+                                style="display:none; margin-top:5px;">
+                        </div>
+
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Bangsa</label>
+                            <select id="bangsa" onchange="toggleBangsaLain()">
+                                <option value="" disabled selected hidden>-- Sila Pilih --</option>
+                                <option value="Melayu">Melayu</option>
+                                <option value="Cina">Cina</option>
+                                <option value="India">India</option>
+                                <option value="Bumiputera Sabah">Bumiputera Sabah</option>
+                                <option value="Bumiputera Sarawak">Bumiputera Sarawak</option>
+                                <option value="Lain">Lain-lain</option>
+                            </select>
+                            <input type="text" id="bangsaLain" placeholder="Sila nyatakan"
+                                style="display:none; margin-top:5px;">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-section-title">Alamat</div>
+                <div class="form-group">
+                    <label>Alamat</label>
+                    <textarea id="alamat" rows="2" placeholder="Alamat Jalan / Taman / No Rumah"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Negeri</label>
+                            <select id="negeri">
+                                <option value="" disabled selected hidden>-- Sila Pilih --</option>
+                                <option>Johor</option>
+                                <option>Kedah</option>
+                                <option>Kelantan</option>
+                                <option>Melaka</option>
+                                <option>Negeri Sembilan</option>
+                                <option>Pahang</option>
+                                <option>Perak</option>
+                                <option>Perlis</option>
+                                <option>Pulau Pinang</option>
+                                <option>Sabah</option>
+                                <option>Sarawak</option>
+                                <option>Selangor</option>
+                                <option>Terengganu</option>
+                                <option>W.P. Kuala Lumpur</option>
+                                <option>W.P. Labuan</option>
+                                <option>W.P. Putrajaya</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Bandar</label>
+                            <input id="bandar">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Poskod</label>
+                            <input id="poskod" maxlength="5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>No. Tel.</label>
+                            <input id="notel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Maklumat Perubatan</div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Tarikh Masuk Wad</label>
+                            <input type="date" id="tarikhmasuk">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>Tarikh Dijangka Discaj</label>
+                            <input type="date" id="tarikhdiscaj">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Diagnosa</label>
+                    <textarea id="diagnosa" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Prognosis</label>
+                    <select id="prognosis">
+                        <option value="" disabled selected hidden>--Sila Pilih--</option>
+                        <option value="Baik (Good)">Baik (Good)</option>
+                        <option value="Sederhana (Fair)">Sederhana (Fair)</option>
+                        <option value="Tidak Baik (Poor)">Tidak Baik (Poor)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Mobiliti Pesakit</label>
+                    <select id="mobiliti">
+                        <option value="" disabled selected hidden>-- Sila Pilih --</option>
+                        <option value="Berjalan">Berjalan</option>
+                        <option value="Kerusi Roda">Kerusi Roda</option>
+                        <option value="Crutches">Crutches</option>
+                        <option value="Walking Frame">Walking Frame</option>
+                        <option value="Bedridden">Bedridden</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="save-btn" onclick="simpan(1)">Simpan</button>
+                <button class="next-btn" onclick="next(1)">Seterusnya</button>
+            </div>
         </div>
-      </div>
 
-      <div class="button-group">
-        <button class="back-btn" onclick="back(2)">Kembali</button>
-        <button class="save-btn" onclick="simpan(2)">Simpan</button>
-        <button class="next-btn" onclick="next(2)">Seterusnya</button>
-      </div>
+        <!-- TAB 2 -->
+        <div class="compartment" id="compartment2">
+            <h3>Tujuan Rujukan</h3>
+
+            <div class="form-section">
+                <div class="form-section-title">BANTUAN PRAKTIK</div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" class="bantuanpraktik"> Pembiayaan Peralatan Perubatan</label>
+                    <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Rawatan</label>
+                    <label><input type="checkbox" class="bantuanpraktik"> Bantuan Pembiayaan Ubat-Ubatan</label>
+                    <label><input type="checkbox" class="bantuanpraktik"> Bantuan Am</label>
+                    <label><input type="checkbox" class="bantuanpraktik"> Penempatan Institusi</label>
+                    <label><input type="checkbox" class="bantuanpraktik"> Mengesan Waris</label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">TERAPI SOKONGAN</div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" class="terapisokongan"> Khidmat Perundingan</label>
+                    <label><input type="checkbox" class="terapisokongan"> Sokongan Emosi</label>
+                    <label><input type="checkbox" class="terapisokongan"> Intervensi Krisis</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="back-btn" onclick="back(2)">Kembali</button>
+                <button class="save-btn" onclick="simpan(2)">Simpan</button>
+                <button class="next-btn" onclick="next(2)">Seterusnya</button>
+            </div>
+        </div>
+
+        <!-- TAB 3 -->
+        <div class="compartment" id="compartment3">
+            <h3>Kategori Kes</h3>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="penyakitkronik"> Penyakit Kronik</label>
+                        <label><input type="checkbox" id="penderaananak"> Penderaan Kanak-kanak</label>
+                        <label><input type="checkbox" id="rumahTangga"> Keganasan Rumah Tangga</label>
+                        <label><input type="checkbox" id="ibutnpnikah"> Ibu Tanpa Nikah</label>
+                        <label><input type="checkbox" id="seksual"> Keganasan Seksual</label>
+                        <label><input type="checkbox" id="terdampar"> Pesakit Terdampar</label>
+                    </div>
+                </div>
+
+                <div class="form-col">
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="tingkahlaku"> Masalah Tingkah Laku</label>
+                        <label><input type="checkbox" id="hiv"> HIV POSITIF / AIDS</label>
+                        <label><input type="checkbox" id="dadah"> Kegiatan Dadah / Alkohol</label>
+                        <label><input type="checkbox" id="bunuhdiri"> Cubaan Bunuh Diri</label>
+                        <label><input type="checkbox" id="oku"> OKU</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><input type="checkbox" id="lainCheck" onclick="toggleLainTextbox()"> Lain-lain</label>
+                <input id="lain" type="text" placeholder="Sila nyatakan" style="display:none; margin-top:5px;">
+            </div>
+
+            <div class="button-group">
+                <button class="back-btn" onclick="back(3)">Kembali</button>
+                <button class="save-btn" onclick="simpan(3)">Simpan</button>
+                <button class="next-btn" onclick="next(3)">Seterusnya</button>
+            </div>
+        </div>
+
+        <!-- TAB 4 -->
+        <div class="compartment" id="compartment4">
+            <h3>Maklumat Perujuk</h3>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Nama Perujuk</label>
+                        <input id="namaperujuk">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Nama Disiplin</label>
+                        <select id="disiplin">
+                            <option value="" disabled selected hidden>-- Pilih Disiplin --</option>
+                            <option>MED</option>
+                            <option>SURG</option>
+                            <option>O&amp;G</option>
+                            <option>ORTHO</option>
+                            <option>PAEDS</option>
+                            <option>OFTAL</option>
+                            <option>ENT</option>
+                            <option>A&amp;E</option>
+                            <option>ONCHO</option>
+                            <option>PSY</option>
+                            <option>REHAB</option>
+                            <option>NEFRO</option>
+                            <option>URO</option>
+                            <option>DERMA</option>
+                            <option>NEURO</option>
+                            <option>NEUROS</option>
+                            <option>HAEMATO</option>
+                            <option>CARDIO</option>
+                            <option>ETC</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Punca Rujukan</label>
+                        <select id="wadrujuk">
+                            <option value="" disabled selected hidden>-- Pilih Lokasi --</option>
+                            <option>Wad</option>
+                            <option>KLINIK</option>
+                            <option>JPL</option>
+                            <option>ED</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Diagnosis</label>
+                        <input id="diagnosisrujuk">
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="back-btn" onclick="back(4)">Kembali</button>
+                <button class="save-btn" onclick="simpan(4)">Simpan</button>
+                <button class="next-btn" onclick="next(4)">Seterusnya</button>
+            </div>
+        </div>
+
+        <!-- TAB 5 -->
+        <div class="compartment" id="compartment5">
+            <h3>Rujukan Agensi</h3>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Nama Agensi</label>
+                        <input id="agensi">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Nama Pembekal</label>
+                        <input id="pembekal">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Tarikh Laporan Dihantar</label>
+                        <input type="date" id="tarikhlaporan">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Tarikh Dokumen Lengkap Diterima</label>
+                        <input type="date" id="tarikhdoklengkap">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Item Dipohon</label>
+                        <input id="item">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Tarikh Kelulusan</label>
+                        <input type="date" id="tarikhlulus">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Tanggungan Pesakit (RM)</label>
+                        <input type="number" id="tanggung">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Jumlah Dipohon (RM)</label>
+                        <input type="number" id="dipohon">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Jumlah Kelulusan (RM)</label>
+                        <input type="number" id="lulus">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Tarikh Tuntutan</label>
+                        <input type="date" id="tarikhtuntut" class="small-date-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="back-btn" onclick="back(5)">Kembali</button>
+                <button class="save-btn" onclick="simpan(5)">Simpan</button>
+                <button class="next-btn" onclick="next(5)">Seterusnya</button>
+            </div>
+        </div>
+
+        <!-- TAB 6 -->
+        <div class="compartment" id="compartment6">
+            <h3>Tarikh Temu Janji</h3>
+
+            <div id="calendar-container">
+                <div id="calendar"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Pegawai Kes</label>
+                        <input id="pegawaikes">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Tarikh Temu Janji</label>
+                        <input type="date" id="tarikhtemujanji">
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label>Masa Temu Janji</label>
+                        <input type="time" id="masatemujanji">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Catatan Temu Janji</label>
+                <textarea id="catatantemujanji" rows="3" placeholder="Catatan tambahan untuk temu janji"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="back-btn" onclick="back(6)">Kembali</button>
+                <button class="save-btn" onclick="simpanTemujanji()">Simpan Temu Janji</button>
+                <button class="next-btn" onclick="hantar()">Hantar Semua</button>
+            </div>
+        </div>
     </div>
 
-    <!-- TAB 3 -->
-    <div class="compartment" id="compartment3">
-      <h3>Kategori Kes</h3>
 
-      <div class="form-row">
-        <div class="form-col">
-          <div class="checkbox-group">
-            <label><input type="checkbox" id="penyakitkronik"> Penyakit Kronik</label>
-            <label><input type="checkbox" id="penderaananak"> Penderaan Kanak-kanak</label>
-            <label><input type="checkbox" id="rumahTangga"> Keganasan Rumah Tangga</label>
-            <label><input type="checkbox" id="ibutnpnikah"> Ibu Tanpa Nikah</label>
-            <label><input type="checkbox" id="seksual"> Keganasan Seksual</label>
-            <label><input type="checkbox" id="terdampar"> Pesakit Terdampar</label>
-          </div>
-        </div>
-
-        <div class="form-col">
-          <div class="checkbox-group">
-            <label><input type="checkbox" id="tingkahlaku"> Masalah Tingkah Laku</label>
-            <label><input type="checkbox" id="hiv"> HIV POSITIF / AIDS</label>
-            <label><input type="checkbox" id="dadah"> Kegiatan Dadah / Alkohol</label>
-            <label><input type="checkbox" id="bunuhdiri"> Cubaan Bunuh Diri</label>
-            <label><input type="checkbox" id="oku"> OKU</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label><input type="checkbox" id="lainCheck" onclick="toggleLainTextbox()"> Lain-lain</label>
-        <input id="lain" type="text" placeholder="Sila nyatakan" style="display:none; margin-top:5px;">
-      </div>
-
-      <div class="button-group">
-        <button class="back-btn" onclick="back(3)">Kembali</button>
-        <button class="save-btn" onclick="simpan(3)">Simpan</button>
-        <button class="next-btn" onclick="next(3)">Seterusnya</button>
-      </div>
-    </div>
-
-    <!-- TAB 4 -->
-    <div class="compartment" id="compartment4">
-      <h3>Maklumat Perujuk</h3>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Nama Perujuk</label>
-            <input id="namaperujuk">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Nama Disiplin</label>
-            <select id="disiplin">
-              <option value="">-- Pilih Disiplin --</option>
-              <option>MED</option>
-              <option>SURG</option>
-              <option>O&amp;G</option>
-              <option>ORTHO</option>
-              <option>PAEDS</option>
-              <option>OFTAL</option>
-              <option>ENT</option>
-              <option>A&amp;E</option>
-              <option>ONCHO</option>
-              <option>PSY</option>
-              <option>REHAB</option>
-              <option>NEFRO</option>
-              <option>URO</option>
-              <option>DERMA</option>
-              <option>NEURO</option>
-              <option>NEUROS</option>
-              <option>HAEMATO</option>
-              <option>CARDIO</option>
-              <option>DLL</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Wad / Klinik / JPL / ED</label>
-            <select id="wadrujuk">
-              <option value="">-- Pilih Lokasi --</option>
-              <option>Wad 1</option>
-              <option>Wad 2</option>
-              <option>Klinik A</option>
-              <option>Klinik B</option>
-              <option>JPL</option>
-              <option>ED</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Diagnosis</label>
-            <input id="diagnosisrujuk">
-          </div>
-        </div>
-      </div>
-
-      <div class="button-group">
-        <button class="back-btn" onclick="back(4)">Kembali</button>
-        <button class="save-btn" onclick="simpan(4)">Simpan</button>
-        <button class="next-btn" onclick="next(4)">Seterusnya</button>
-      </div>
-    </div>
-
-    <!-- TAB 5 -->
-    <div class="compartment" id="compartment5">
-      <h3>Rujukan Agensi</h3>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Nama Agensi</label>
-            <input id="agensi">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Nama Pembekal</label>
-            <input id="pembekal">
-          </div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Tarikh Laporan Dihantar</label>
-            <input type="date" id="tarikhlaporan">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Tarikh Dokumen Lengkap Diterima</label>
-            <input type="date" id="tarikhdoklengkap">
-          </div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Item Dipohon</label>
-            <input id="item">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Tarikh Kelulusan</label>
-            <input type="date" id="tarikhlulus">
-          </div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Tanggungan Pesakit (RM)</label>
-            <input type="number" id="tanggung">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Jumlah Dipohon (RM)</label>
-            <input type="number" id="dipohon">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Jumlah Kelulusan (RM)</label>
-            <input type="number" id="lulus">
-          </div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Tarikh Tuntutan</label>
-            <input type="date" id="tarikhtuntut" class="small-date-input">
-          </div>
-        </div>
-      </div>
-
-      <div class="button-group">
-        <button class="back-btn" onclick="back(5)">Kembali</button>
-        <button class="save-btn" onclick="simpan(5)">Simpan</button>
-        <button class="next-btn" onclick="next(5)">Seterusnya</button>
-      </div>
-    </div>
-
-    <!-- TAB 6 -->
-    <div class="compartment" id="compartment6">
-      <h3>Tarikh Temu Janji</h3>
-
-      <div class="form-row">
-        <div class="form-col">
-          <div class="form-group">
-            <label>Pegawai Kes</label>
-            <input id="pegawaikes">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Tarikh Temu Janji</label>
-            <input type="date" id="tarikhtemujanji">
-          </div>
-        </div>
-        <div class="form-col">
-          <div class="form-group">
-            <label>Masa Temu Janji</label>
-            <input type="time" id="masatemujanji">
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Catatan Temu Janji</label>
-        <textarea id="catatantemujanji" rows="3" placeholder="Catatan tambahan untuk temu janji"></textarea>
-      </div>
-
-      <div class="button-group">
-        <button class="back-btn" onclick="back(6)">Kembali</button>
-        <button class="save-btn" onclick="simpan(6)">Simpan</button>
-        <button class="next-btn" onclick="hantar()">Hantar Semua</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function confirmGoLogin() {
-      if (confirm("Adakah anda pasti mahu kembali ke halaman Login?")) {
-        window.location.href = "test(login).html";
-      }
-    }
-
-    let data = {};
-
-    function toggleLainTextbox() {
-      const lainCheckbox = document.getElementById('lainCheck');
-      const lainTextbox = document.getElementById('lain');
-      lainTextbox.style.display = lainCheckbox.checked ? 'block' : 'none';
-    }
-
-    function switchTab(num) {
-      document.querySelectorAll('.compartment').forEach(c => c.classList.remove('active'));
-      document.querySelector(`#compartment${num}`).classList.add('active');
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelector(`.tab[data-tab="${num}"]`).classList.add('active');
-
-      // bila dah buka tab, pastikan dia boleh diakses semula
-      document.querySelector(`.tab[data-tab="${num}"]`).classList.remove('disabled');
-    }
-
-    function next(num) {
-      simpan(num);
-      // buka tab seterusnya
-      document.querySelector(`.tab[data-tab="${num + 1}"]`).classList.remove('disabled');
-      switchTab(num + 1);
-    }
-
-    function back(num) {
-      simpan(num);
-      switchTab(num - 1);
-    }
-
-    function simpan(num) {
-      let inputs = document.querySelectorAll(`#compartment${num} input, #compartment${num} textarea, #compartment${num} select`);
-      inputs.forEach(i => {
-        if (i.type === "checkbox") {
-          data[i.id || i.className] = i.checked ? "Ya" : "Tidak";
-        } else {
-          data[i.id] = i.value;
+    <script>
+        // Fungsi-fungsi yang sudah ada
+        function confirmGoLogin() {
+            if (confirm("Adakah anda pasti mahu kembali ke halaman Login?")) {
+                window.location.href = "test(login).html";
+            }
         }
-      });
-      console.log(`Bahagian ${num} disimpan`, data);
-    }
 
-    function hantar() {
-      simpan(6);
-      console.log("Semua data dihantar:", data);
-      alert("Semua maklumat telah dihantar!");
-    }
+        let data = {};
+        let calendar;
 
-    // Auto-generate No. Fail JKSP bila page load
-    window.onload = function () {
-      let autoId = "JKSP-" + Math.floor(Math.random() * 100000);
-      document.getElementById("nofile").value = autoId;
-    };
+        // Inisialisasi kalender dengan benar
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
 
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', function () {
-        let tabNum = parseInt(this.dataset.tab);
-        if (!this.classList.contains('disabled')) {
-          switchTab(tabNum);
+            // Muat temu janji dari localStorage
+            const savedAppointments = loadAppointments();
+
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                locale: 'ms',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                buttonText: {
+                    today: 'Hari Ini',
+                    month: 'Bulan',
+                    week: 'Minggu',
+                    day: 'Hari'
+                },
+                events: savedAppointments,
+                eventClick: function (info) {
+                    // Tampilkan detail event ketika diklik
+                    alert(
+                        'Temu Janji: ' + info.event.title +
+                        '\nMasa: ' + info.event.start.toLocaleString('ms-MY')
+                    );
+                }
+            });
+
+            calendar.render();
+
+            // Set tanggal hari ini sebagai default untuk input tanggal
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('tarikhtemujanji').value = formattedDate;
+        });
+
+        function toggleLainTextbox() {
+            const lainCheckbox = document.getElementById('lainCheck');
+            const lainTextbox = document.getElementById('lain');
+            lainTextbox.style.display = lainCheckbox.checked ? 'block' : 'none';
         }
-      });
-    });
 
-    function autoTarikhUmur() {
-      const icInput = document.getElementById("nokp");
-      const dobInput = document.getElementById("tarikhlahir");
-      const ageInput = document.getElementById("umur");
+        function switchTab(num) {
+            document.querySelectorAll('.compartment').forEach(c => c.classList.remove('active'));
+            document.querySelector(`#compartment${num}`).classList.add('active');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab[data-tab="${num}"]`).classList.add('active');
 
-      // Terima nombor dengan/ tanpa sengkang, ambil hanya digit
-      const nokp = (icInput.value || "").replace(/\D/g, "");
+            // bila dah buka tab, pastikan dia boleh diakses semula
+            document.querySelector(`.tab[data-tab="${num}"]`).classList.remove('disabled');
 
-      // Jika kurang 6 digit (YYMMDD) — kosongkan
-      if (nokp.length < 6) {
-        dobInput.value = "";
-        ageInput.value = "";
-        return;
-      }
+            // Jika beralih ke tab 6, muat ulang kalender untuk memastikan tampilan benar
+            if (num === 6) {
+                setTimeout(() => {
+                    calendar.updateSize();
+                }, 100);
+            }
+        }
 
-      const yy = parseInt(nokp.slice(0, 2), 10);
-      const mm = parseInt(nokp.slice(2, 4), 10);
-      const dd = parseInt(nokp.slice(4, 6), 10);
+        function next(num) {
+            simpan(num, true); // Simpan + tunjuk notifikasi
+            document.querySelector(`.tab[data-tab="${num + 1}"]`).classList.remove('disabled');
+            switchTab(num + 1);
+        }
 
-      // Validasi asas bulan & hari
-      if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return;
+        function back(num) {
+            simpan(num, false); // Simpan tapi JANGAN tunjuk notifikasi
+            switchTab(num - 1);
+        }
 
-      const today = new Date();
-      const century = (yy <= (today.getFullYear() % 100)) ? 2000 : 1900;
-      const year = century + yy;
+        function simpan(num, showNotif = true) {
+            let inputs = document.querySelectorAll(`#compartment${num} input, #compartment${num} textarea, #compartment${num} select`);
+            inputs.forEach(i => {
+                if (i.type === "checkbox") {
+                    data[i.id || i.className] = i.checked ? "Ya" : "Tidak";
+                } else {
+                    data[i.id] = i.value;
+                }
+            });
+            console.log(`Bahagian ${num} disimpan`, data);
 
-      // Bina tarikh & sahkan (elak 31/02 dsb.)
-      const candidate = new Date(year, mm - 1, dd);
-      if (
-        candidate.getFullYear() !== year ||
-        candidate.getMonth() !== (mm - 1) ||
-        candidate.getDate() !== dd
-      ) return;
+            // hanya tunjuk notifikasi kalau showNotif = true
+            if (showNotif) {
+                const notif = document.getElementById("notif");
+                notif.innerText = `Bahagian ${num} berjaya disimpan! ✅`;
+                notif.style.display = "block";
 
-      // Format tempatan untuk <input type="date"> (YYYY-MM-DD) — tanpa UTC/ISO
-      const pad2 = n => String(n).padStart(2, "0");
-      dobInput.value = `${year}-${pad2(mm)}-${pad2(dd)}`;
+                setTimeout(() => {
+                    notif.style.display = "none";
+                }, 2000);
+            }
+        }
 
-      // Kira umur
-      let age = today.getFullYear() - year;
-      const belumSambutHariLahir =
-        (today.getMonth() < (mm - 1)) ||
-        (today.getMonth() === (mm - 1) && today.getDate() < dd);
-      if (belumSambutHariLahir) age -= 1;
+        function hantar() {
+            simpan(6);
+            console.log("Semua data dihantar:", data);
+            alert("Semua maklumat telah dihantar!");
+        }
 
-      ageInput.value = age;
-    }
-  </script>
+        // Auto-generate No. Fail JKSP bila page load
+        window.onload = function () {
+            let autoId = "JKSP-" + Math.floor(Math.random() * 100000);
+            document.getElementById("nofile").value = autoId;
+        };
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                let tabNum = parseInt(this.dataset.tab);
+                if (!this.classList.contains('disabled')) {
+                    switchTab(tabNum);
+                }
+            });
+        });
+
+        function autoTarikhUmur() {
+            const icInput = document.getElementById("nokp");
+            const dobInput = document.getElementById("tarikhlahir");
+            const ageInput = document.getElementById("umur");
+            const genderInput = document.getElementById("jantina");
+
+            // Terima nombor dengan/ tanpa sengkang, ambil hanya digit
+            const nokp = (icInput.value || "").replace(/\D/g, "");
+
+            // Jika kurang 6 digit (YYMMDD) — kosongkan
+            if (nokp.length < 6) {
+                dobInput.value = "";
+                ageInput.value = "";
+                genderInput.value = "";
+                return;
+            }
+
+            const yy = parseInt(nokp.slice(0, 2), 10);
+            const mm = parseInt(nokp.slice(2, 4), 10);
+            const dd = parseInt(nokp.slice(4, 6), 10);
+
+            // Validasi asas bulan & hari
+            if (mm < 1 || mm > 12 || dd < 1 || dd > 31) {
+                dobInput.value = "";
+                ageInput.value = "";
+                genderInput.value = "";
+                return;
+            }
+
+            const today = new Date();
+            const century = (yy <= (today.getFullYear() % 100)) ? 2000 : 1900;
+            const year = century + yy;
+
+            // Bina tarikh & sahkan (elak 31/02 dsb.)
+            const candidate = new Date(year, mm - 1, dd);
+            if (
+                candidate.getFullYear() !== year ||
+                candidate.getMonth() !== (mm - 1) ||
+                candidate.getDate() !== dd
+            ) {
+                dobInput.value = "";
+                ageInput.value = "";
+                genderInput.value = "";
+                return;
+            }
+
+            // Format tempatan untuk <input type="date"> (YYYY-MM-DD)
+            const pad2 = n => String(n).padStart(2, "0");
+            dobInput.value = `${year}-${pad2(mm)}-${pad2(dd)}`;
+
+            // Kira umur
+            let age = today.getFullYear() - year;
+            const belumSambutHariLahir =
+                (today.getMonth() < (mm - 1)) ||
+                (today.getMonth() === (mm - 1) && today.getDate() < dd);
+            if (belumSambutHariLahir) age -= 1;
+
+            ageInput.value = age;
+
+            // Tentukan jantina jika 12 digit
+            if (nokp.length >= 12) {
+                const lastDigit = parseInt(nokp.charAt(11), 10);
+                genderInput.value = (lastDigit % 2 === 1) ? "Lelaki" : "Perempuan";
+            } else {
+                genderInput.value = "";
+            }
+        }
+
+        // Fungsi untuk menyimpan temu janji ke localStorage
+        function saveAppointment(appointment) {
+            // Dapatkan data yang sudah ada
+            const appointments = loadAppointments();
+
+            // Tambahkan appointment baru
+            appointments.push(appointment);
+
+            // Simpan ke localStorage
+            localStorage.setItem('patientAppointments', JSON.stringify(appointments));
+        }
+
+        // Fungsi untuk memuat temu janji dari localStorage
+        function loadAppointments() {
+            const appointmentsJSON = localStorage.getItem('patientAppointments');
+            if (appointmentsJSON) {
+                return JSON.parse(appointmentsJSON);
+            }
+            return [];
+        }
+
+        // Fungsi untuk menyimpan temu janji
+        function simpanTemujanji() {
+            const pegawai = document.getElementById('pegawaikes').value;
+            const tarikh = document.getElementById('tarikhtemujanji').value;
+            const masa = document.getElementById('masatemujanji').value;
+            const catatan = document.getElementById('catatantemujanji').value;
+
+            if (!tarikh || !masa) {
+                alert("Sila isi tarikh dan masa temu janji!");
+                return;
+            }
+
+            // Gabungkan tarikh + masa jadi ISO format
+            const startDateTime = tarikh + "T" + masa;
+
+            // Buat objek appointment
+            const appointment = {
+                title: `${pegawai || "Temu Janji"} - ${catatan || "Tiada catatan"}`,
+                start: startDateTime,
+                allDay: false,
+                extendedProps: {
+                    pegawai: pegawai,
+                    catatan: catatan
+                }
+            };
+
+            // Tambah event dalam calendar
+            calendar.addEvent(appointment);
+
+            // Simpan ke localStorage
+            saveAppointment(appointment);
+
+            // Reset form
+            document.getElementById('pegawaikes').value = '';
+            document.getElementById('masatemujanji').value = '';
+            document.getElementById('catatantemujanji').value = '';
+
+            // Tampilkan notifikasi
+            const notif = document.getElementById("notif");
+            notif.innerText = "Temu janji berjaya disimpan! ✅";
+            notif.style.display = "block";
+
+            setTimeout(() => {
+                notif.style.display = "none";
+            }, 2000);
+        }
+
+        function toggleAgamaLain() {
+            const select = document.getElementById("agama");
+            const input = document.getElementById("agamaLain");
+            input.style.display = (select.value === "Lain") ? "block" : "none";
+        }
+
+        function toggleBangsaLain() {
+            const select = document.getElementById("bangsa");
+            const input = document.getElementById("bangsaLain");
+            input.style.display = (select.value === "Lain") ? "block" : "none";
+        }
+
+    </script>
 </body>
 
 </html>
