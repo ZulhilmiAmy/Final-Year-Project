@@ -130,6 +130,58 @@
       margin: -20px -20px 20px -20px;
       width: calc(100% + 40px);
     }
+    
+    /* Gaya untuk butang cetak */
+    .print-button-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .print-btn {
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .print-btn:hover {
+      background-color: #00264d;
+    }
+    
+    /* Gaya untuk mode cetak */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .header, .container {
+        margin: 0;
+        width: 100%;
+        box-shadow: none;
+      }
+      
+      .top-bar, .print-button-container {
+        display: none;
+      }
+      
+      .container {
+        padding: 10px;
+        border-radius: 0;
+      }
+      
+      .static-field {
+        border-bottom: 1px solid #333;
+      }
+    }
   </style>
 </head>
 
@@ -143,7 +195,7 @@
     <div class="breadcrumbs">
       <a href="#">Login</a> &gt;
       <a href="test(home).html">Halaman Utama</a> &gt;
-      <a href="formsebaris.html">Sistem maklumat pesakit</a> &gt;
+      <a href="BorangMaklumatPesakir.html">Sistem maklumat pesakit</a> &gt;
       <a href="history.html">Sejarah Pesakit</a>
     </div>
   </div>
@@ -212,6 +264,13 @@
       <div class="form-group"><label>Tarikh Temu Janji</label><span class="static-field"></span></div>
       <div class="form-group"><label>Masa Temu Janji</label><span class="static-field"></span></div>
       <div class="form-group"><label>Catatan Temu Janji</label><span class="static-field wide-field"></span></div>
+    </div>
+    
+    <!-- Butang Cetak -->
+    <div class="print-button-container">
+      <button class="print-btn" onclick="window.print()">
+        <i class="fas fa-print"></i> Cetak Borang
+      </button>
     </div>
   </div>
 
