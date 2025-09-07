@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPeKSi - DAFTAR PERMOHONAN BARU</title>
+
+  <!-- FullCalendar (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/ms.global.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom right, #e6f2f8, #f0f6fa);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .header {
+      background-color: #111;
+      color: white;
+      text-align: center;
+    }
+
+    .header img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 140px;
+      object-fit: cover;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 8px 20px;
+      border-bottom: 2px solid #204d84;
+      font-size: 14px;
+    }
+
+    .breadcrumbs a {
+      color: #204d84;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumbs span {
+      color: #555;
+      font-weight: bold;
+    }
+
+    .greeting {
+      margin-right: 20px;
+      font-size: 15px;
+      color: #204d84;
+    }
+
+
+    .logout-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+
+    .container {
+      margin: 20px;
+      background: #edeae0;
+      border: 5px solid #204d84;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .title {
+      background: #204d84;
+      color: white;
+      font-weight: bold;
+      padding: 15px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      margin: -20px;
+      margin-bottom: 20px;
+    }
+
+    .input-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    input[type="text"] {
+      padding: 10px 35px 10px 12px;
+      width: 250px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: all 0.2s ease;
+    }
+
+    .clear-btn:hover {
+      background: #e74c3c;
+      color: #fff;
+      border-color: #c0392b;
+    }
+
+    .record-display {
+      background: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      display: none;
+    }
+
+    .options {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .new-application {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .history {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .cancel {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .no-record {
+      color: #d9534f;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    /* ---------- Stats styles ---------- */
+    .stats-container {
+      margin: 20px;
+      background: #f0f6fa;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .stats-title {
+      background-color: #50a7c2;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .stat-box {
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      position: relative;
+      font-weight: bold;
+    }
+
+    .green {
+      background-color: #7ee37e;
+      color: black;
+    }
+
+    .blue {
+      background-color: #57a0d3;
+    }
+
+    .orange {
+      background-color: #f39200;
+    }
+
+    .desc-btn {
+      display: block;
+      background: rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 10px;
+      border-radius: 0 0 8px 8px;
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    /* ---------- Calendar & reminder area ---------- */
+    .calendar-reminder-container {
+      display: flex;
+      gap: 20px;
+      margin: 20px;
+      align-items: flex-start;
+    }
+
+    #calendar {
+      flex: 3;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .reminder-box {
+      flex: 1;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      min-width: 220px;
+      max-height: 560px;
+      overflow: auto;
+    }
+
+    .reminder-box h2 {
+      margin-top: 0;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .date-group {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .date-header {
+      background-color: #f0f0f0;
+      padding: 8px 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .date-header:hover {
+      background-color: #e0e0e0;
+    }
+
+    .date-header .arrow {
+      transition: transform 0.3s;
+    }
+
+    .date-header.collapsed .arrow {
+      transform: rotate(-90deg);
+    }
+
+    .appointments-list {
+      padding: 0;
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .date-header:not(.collapsed)+.appointments-list {
+      max-height: 500px;
+    }
+
+    .appointment-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+    }
+
+    .appointment-item:last-child {
+      border-bottom: none;
+    }
+
+    .appointment-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .btn-small {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.75em;
+    }
+
+    .btn-small.secondary {
+      background: #888;
+    }
+
+    .btn-small.edit {
+      background: #357ab7;
+    }
+
+    .no-appointments {
+      padding: 10px;
+      text-align: center;
+      color: #888;
+      font-style: italic;
+    }
+
+    .tips-section {
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* ---------- Modal for add/remove event ---------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+    }
+
+    .modal {
+      width: 420px;
+      max-width: 95%;
+      background: white;
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+
+    .modal p {
+      margin: 0 0 12px 0;
+      color: #444;
+      font-size: 0.95em;
+    }
+
+    .modal .events-list {
+      max-height: 200px;
+      overflow: auto;
+      margin-bottom: 12px;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    .modal .events-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .modal .events-list li:last-child {
+      border-bottom: none;
+    }
+
+    .modal .no-events {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      padding: 10px 0;
+    }
+
+    .modal label {
+      display: block;
+      font-size: 0.9em;
+      margin-bottom: 6px;
+    }
+
+    .modal input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .modal .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .modal .btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: #204d84;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-muted {
+      background: #eee;
+      color: #222;
+    }
+
+    /* small responsive */
+    @media (max-width:900px) {
+      .calendar-reminder-container {
+        flex-direction: column;
+      }
+
+      #calendar {
+        order: 1;
+      }
+
+      .reminder-box {
+        order: 2;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- header -->
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/ZulhilmiAmy/Final-Year-Project/main/Image%20banner/Banner-SPeKSi.png"
+      alt="Banner Ujian" onerror="this.style.display='none'">
+  </div>
+
+  <div class="top-bar">
+    <div class="breadcrumbs">
+      <a href="#" onclick="confirmGoLogin()">Log Masuk</a> &gt;
+      <a href="{{ route('home') }}">Halaman Utama</a>
+    </div>
+
+    <div class="greeting">
+      👋 Hi, {{ Auth::user()->name }}
+    </div>
+
+    <!-- Laravel logout form -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+      @csrf
+    </form>
+    <button class="logout-btn" onclick="confirmLogout()">
+      <i class="fas fa-sign-out-alt"></i> Log Keluar
+    </button>
+  </div>
+
+  <!-- kontena utama -->
+  <div class="container">
+    <div class="title">DAFTAR PERMOHONAN BARU</div>
+
+    <label for="noKP"><b>Carian No.KP Pemohon</b></label>
+    <div class="input-container">
+      <input type="text" id="noKP" name="noKP" placeholder="Masukkan No.KP Pemohon" maxlength="12" />
+      <button class="clear-btn" id="clearBtn">x</button>
+    </div>
+
+    <div id="recordDisplay" class="record-display">
+      <h2>PAPARAN REKOD PEMOHON</h2>
+      <div id="recordDetails"></div>
+      <div id="recordButtons" class="options"></div>
+    </div>
+  </div>
+
+  <!-- Kalendar + Peringatan -->
+  <div class="calendar-reminder-container">
+    <div id="calendar"></div>
+
+    <div class="reminder-box">
+      <h2>Temujanji Akan Datang</h2>
+      <div id="reminder-list">
+        <div class="no-appointments">Tiada temujanji akan datang.</div>
+      </div>
+      <div class="tips-section">
+        <strong>Tips:</strong>
+        <ul style="padding-left:18px;margin:6px 0;">
+          <li>Klik tarikh untuk urus (tambah / padam) temujanji.</li>
+          <li>Temujanji disimpan dalam pelayar anda.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistik -->
+  <div class="stats-container">
+    <div class="stats-title">Statistik Permohonan 2025</div>
+    <div class="stats-grid">
+      <div class="stat-box green">
+        JUMLAH KES
+        <div style="font-size:28px;">11</div>
+        <div>(85%)</div>
+        <a href="#" class="desc-btn">Keterangan</a>
+      </div>
+      <div class="stat-box blue">
+        KPI 1
+        <div style="font-size:28px;">1</div>
+        <div>(8%)</div>
+        <a href="#" class="desc-btn">Keterangan</a>
+      </div>
+      <div class="stat-box orange">
+        KPI 2
+        <div style="font-size:28px;">0</div>
+        <div>(0%)</div>
+        <a href="#" class="desc-btn">Keterangan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal (tambah/padam) -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Urus Temujanji</h3>
+      <p id="modalDateLabel">Tarikh: </p>
+
+      <div>
+        <label>Temujanji sedia ada pada tarikh ini:</label>
+        <ul class="events-list" id="modalEventsList"></ul>
+      </div>
+
+      <div style="margin-top:8px;">
+        <label for="newEventTitle">Tambah Temujanji Baru</label>
+        <input type="text" id="newEventTitle" placeholder="Nama pesakit..." />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-muted" id="modalCloseBtn">Tutup</button>
+        <button class="btn btn-primary" id="modalAddBtn">Tambah</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Your JavaScript from test(home).html here
+    // Replace the confirmLogout function with Laravel's logout
+    function confirmLogout() {
+      if (confirm("Adakah anda pasti mahu log keluar?")) {
+        document.getElementById('logout-form').submit();
+      }
+    }
+
+    function confirmGoLogin() {
+      if (confirm("Adakah anda pasti mahu kembali ke halaman Login?")) {
+        window.location.href = "{{ route('login.custom') }}";
+      }
+    }
+
+    /* ===========================
+       Small sample record DB (original UI)
+       =========================== */
+    const existingRecords = {
+      '050717010907': { name: 'MUHAMAD ZULHILMI BIN SEMAIL', date: '27-05-2021' },
+      '123456789012': { name: 'ALI BIN ABU', date: '15-01-2023' }
+    };
+
+    const noKPInput = document.getElementById('noKP');
+    const recordDisplay = document.getElementById('recordDisplay');
+    const recordDetails = document.getElementById('recordDetails');
+    const recordButtons = document.getElementById('recordButtons');
+    const clearBtn = document.getElementById('clearBtn');
+
+    noKPInput.addEventListener('input', function () {
+      if (this.value.length === 12) checkRecord(this.value);
+      clearBtn.style.display = this.value ? 'block' : 'none';
+    });
+
+    clearBtn.addEventListener('click', function () {
+      noKPInput.value = '';
+      clearBtn.style.display = 'none';
+      hideRecordDisplay();
+    });
+
+    function checkRecord(kpNumber) {
+      if (existingRecords[kpNumber]) {
+        recordDetails.innerHTML = `
+        <p><strong>NAMA PEMOHON :</strong> ${existingRecords[kpNumber].name}</p>
+        <p><strong>NO.KP :</strong> ${kpNumber}</p>
+        <p><strong>TARIKH PERMOHONAN :</strong> ${existingRecords[kpNumber].date}</p>
+        <hr>`;
+        recordButtons.innerHTML = `
+        <button class="option-btn history" onclick="window.location.href='history.html'">SEJARAH</button>
+        <button class="option-btn new-application" onclick="newApplication()">DAFTAR PERMOHONAN BARU</button>
+        <button class="option-btn cancel" onclick="hideRecordDisplay()">BATAL</button>`;
+      } else {
+        recordDetails.innerHTML = `<div class="no-record">REKOD TIDAK WUJUD!</div><hr>`;
+        recordButtons.innerHTML = `
+        <button class="option-btn new-application" onclick="newApplication()">DAFTAR PERMOHONAN BARU</button>
+        <button class="option-btn cancel" onclick="hideRecordDisplay()">BATAL</button>`;
+      }
+      recordDisplay.style.display = 'block';
+    }
+
+    function hideRecordDisplay() {
+      recordDisplay.style.display = 'none';
+      noKPInput.value = '';
+      clearBtn.style.display = 'none';
+    }
+
+    function newApplication() {
+      window.location.href = 'formsebaris.html?kp=' + encodeURIComponent(noKPInput.value);
+    }
+
+    /* ===========================
+       Calendar + Reminder + Persistence + Modal
+       =========================== */
+
+    const STORAGE_KEY = 'my_app_calendar_events_v1';
+
+    // events array format: [{id: 'ts-123', title: '...', start: 'YYYY-MM-DD'}]
+    function loadEventsFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        return JSON.parse(raw);
+      } catch (e) {
+        console.warn('Failed to parse stored events', e);
+        return [];
+      }
+    }
+    function saveEventsToStorage(arr) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    // helpers
+    function createId() { return 'id-' + Date.now() + '-' + Math.floor(Math.random() * 10000); }
+    function formatDateDisplay(d) { // d is Date object
+      const options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
+      return d.toLocaleDateString('ms-MY', options);
+    }
+
+    // Modal elements & functions
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalDateLabel = document.getElementById('modalDateLabel');
+    const modalEventsList = document.getElementById('modalEventsList');
+    const newEventTitleInput = document.getElementById('newEventTitle');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalAddBtn = document.getElementById('modalAddBtn');
+
+    let modalCurrentDateStr = null; // 'YYYY-MM-DD'
+
+    function openModalForDate(dateStr) {
+      modalCurrentDateStr = dateStr;
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden', 'false');
+      const dateObj = new Date(dateStr);
+      modalDateLabel.textContent = 'Tarikh: ' + formatDateDisplay(dateObj);
+      newEventTitleInput.value = '';
+      renderModalEvents();
+      newEventTitleInput.focus();
+    }
+
+    function closeModal() {
+      modalBackdrop.style.display = 'none';
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+      modalCurrentDateStr = null;
+    }
+
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', function (e) { if (e.target === modalBackdrop) closeModal(); });
+    newEventTitleInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { modalAddBtn.click(); } });
+
+    // Application state and FullCalendar initialization
+    document.addEventListener('DOMContentLoaded', function () {
+      let storedEvents = loadEventsFromStorage(); // initial events
+      let calendarEl = document.getElementById('calendar');
+
+      window.calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        editable: true,
+        locale: 'ms',
+
+        // Ubah "Today" menjadi "Hari Ini"
+        buttonText: {
+          today: 'Hari Ini'
+        },
+
+        events: storedEvents.map(ev => ({ id: ev.id, title: ev.title, start: ev.start })),
+        dateClick: function (info) {
+          openModalForDate(info.dateStr);
+        },
+        eventClick: function (info) {
+          openModalForDate(info.event.startStr);
+        },
+        eventDrop: function (info) {
+          const ev = storedEvents.find(e => e.id === info.event.id);
+          if (ev) {
+            ev.start = info.event.startStr;
+            saveEventsToStorage(storedEvents);
+            updateReminderList();
+          }
+        },
+        eventResize: function (info) {
+          // ignore untuk single-day events
+        }
+      });
+
+      calendar.render();
+
+      // Reusable functions for modal rendering & actions
+      function renderModalEvents() {
+        modalEventsList.innerHTML = '';
+        const eventsOnDate = storedEvents.filter(e => e.start === modalCurrentDateStr);
+
+        if (eventsOnDate.length === 0) {
+          const noEvents = document.createElement('li');
+          noEvents.className = 'no-events';
+          noEvents.textContent = 'Tiada temujanji pada tarikh ini.';
+          modalEventsList.appendChild(noEvents);
+          return;
+        }
+
+        eventsOnDate.forEach(ev => {
+          const li = document.createElement('li');
+          const left = document.createElement('div');
+          left.style.display = 'flex';
+          left.style.flexDirection = 'column';
+          left.innerHTML = `<strong style="font-size:0.95em;">${escapeHtml(ev.title)}</strong>`;
+
+          const right = document.createElement('div');
+
+          const delBtn = document.createElement('button');
+          delBtn.className = 'btn btn-danger';
+          delBtn.textContent = 'Padam';
+          delBtn.style.marginLeft = '8px';
+          delBtn.onclick = function () {
+            if (!confirm(`Padam temujanji "${ev.title}" pada ${formatDateDisplay(new Date(ev.start))}?`)) return;
+            // remove from storedEvents
+            storedEvents = storedEvents.filter(x => x.id !== ev.id);
+            saveEventsToStorage(storedEvents);
+            // remove from calendar
+            const calEv = calendar.getEventById(ev.id);
+            if (calEv) calEv.remove();
+            renderModalEvents();
+            updateReminderList();
+          };
+
+          right.appendChild(delBtn);
+          li.appendChild(left);
+          li.appendChild(right);
+          li.style.display = 'flex';
+          li.style.justifyContent = 'space-between';
+          li.style.alignItems = 'center';
+          li.style.padding = '8px 0';
+          modalEventsList.appendChild(li);
+        });
+      }
+
+      modalAddBtn.addEventListener('click', function () {
+        const title = newEventTitleInput.value.trim();
+        if (!title) {
+          alert('Sila masukkan nama pesakit.');
+          newEventTitleInput.focus();
+          return;
+        }
+        const newEv = { id: createId(), title: title, start: modalCurrentDateStr };
+        storedEvents.push(newEv);
+        saveEventsToStorage(storedEvents);
+        calendar.addEvent({ id: newEv.id, title: newEv.title, start: newEv.start });
+        newEventTitleInput.value = '';
+        renderModalEvents();
+        updateReminderList();
+      });
+
+      // initial reminder render
+      updateReminderList();
+
+      // helper to escape HTML when injecting titles
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"'`=\/]/g, function (s) {
+          return ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;'
+          })[s];
+        });
+      }
+
+      // update reminder list with collapsible date groups
+      function updateReminderList() {
+        const now = new Date();
+        const upcoming = storedEvents
+          .map(e => ({ ...e, dateObj: new Date(e.start) }))
+          .filter(e => e.dateObj >= new Date(now.getFullYear(), now.getMonth(), now.getDate())) // include today and future
+          .sort((a, b) => a.dateObj - b.dateObj || a.title.localeCompare(b.title));
+
+        const reminderList = document.getElementById('reminder-list');
+        reminderList.innerHTML = '';
+
+        if (upcoming.length === 0) {
+          reminderList.innerHTML = '<div class="no-appointments">Tiada temujanji akan datang.</div>';
+          return;
+        }
+
+        // Group appointments by date
+        const appointmentsByDate = {};
+        upcoming.forEach(appointment => {
+          const dateKey = appointment.start;
+          if (!appointmentsByDate[dateKey]) {
+            appointmentsByDate[dateKey] = [];
+          }
+          appointmentsByDate[dateKey].push(appointment);
+        });
+
+        // Create collapsible date groups
+        Object.keys(appointmentsByDate).sort().forEach(dateKey => {
+          const dateObj = new Date(dateKey);
+          const appointments = appointmentsByDate[dateKey];
+
+          const dateGroup = document.createElement('div');
+          dateGroup.className = 'date-group';
+
+          const dateHeader = document.createElement('div');
+          dateHeader.className = 'date-header collapsed';
+          dateHeader.innerHTML = `
+            <span>${formatDateDisplay(dateObj)}</span>
+            <span class="arrow">▼</span>
+          `;
+
+          const appointmentsList = document.createElement('div');
+          appointmentsList.className = 'appointments-list';
+
+          // Add appointments for this date
+          appointments.forEach(appointment => {
+            const appointmentItem = document.createElement('div');
+            appointmentItem.className = 'appointment-item';
+            appointmentItem.innerHTML = `
+              <div>${escapeHtml(appointment.title)}</div>
+              <div class="appointment-actions">
+                <button class="btn-small edit" onclick="openModalForDate('${appointment.start}')">Ubah</button>
+                <button class="btn-small" onclick="deleteAppointment('${appointment.id}')">Padam</button>
+              </div>
+            `;
+            appointmentsList.appendChild(appointmentItem);
+          });
+
+          // Toggle collapse on header click
+          dateHeader.addEventListener('click', function () {
+            this.classList.toggle('collapsed');
+          });
+
+          dateGroup.appendChild(dateHeader);
+          dateGroup.appendChild(appointmentsList);
+          reminderList.appendChild(dateGroup);
+        });
+      }
+
+      // Function to delete an appointment
+      window.deleteAppointment = function (id) {
+        if (!confirm('Padam temujanji ini?')) return;
+
+        // Remove from storage
+        storedEvents = storedEvents.filter(e => e.id !== id);
+        saveEventsToStorage(storedEvents);
+
+        // Remove from calendar
+        const calEv = calendar.getEventById(id);
+        if (calEv) calEv.remove();
+
+        updateReminderList();
+      };
+
+      // Expose updateReminderList to outer scope
+      window.updateReminderList = updateReminderList;
+      window.openModalForDate = openModalForDate;
+    }); // DOMContentLoaded end
+
+    // Rest of your JavaScript code
+  </script>
+</body>
+
+</html>
