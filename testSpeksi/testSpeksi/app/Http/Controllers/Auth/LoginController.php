@@ -14,7 +14,7 @@ class LoginController extends Controller
     // Tell Laravel to use 'username' instead of the default 'email'
     public function username()
     {
-        return 'username';
+        return 'email';
     }
 
     // Add captcha validation
